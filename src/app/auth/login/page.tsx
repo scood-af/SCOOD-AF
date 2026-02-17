@@ -33,7 +33,7 @@ export default function LoginPage() {
     const handleEmailLogin = (e: React.FormEvent) => {
         e.preventDefault()
         // Add your email login logic here
-        console.log("Email login triggered")
+        console.log('Email login triggered')
     }
 
     // Shared styles to ensure Inputs and Buttons match perfectly
@@ -47,33 +47,32 @@ export default function LoginPage() {
                 quantity={6}
                 speed={0.67}
                 backgroundColor="#a3ff47" // The Lime Green
-                shapeColor="#ff5cd9"       // The Pink Flower
+                shapeColor="#ff5cd9" // The Pink Flower
                 className="absolute inset-0 z-0"
             />
 
             {/* Content Layer */}
             <div className="relative z-10 flex min-h-full items-center justify-center p-4">
                 <div className="w-full max-w-sm space-y-4">
-                    
-                    <form onSubmit={handleEmailLogin} className="flex flex-col gap-4">
-                        <Input 
-                            type="email" 
-                            placeholder="email" 
-                            required 
+                    <form
+                        onSubmit={handleEmailLogin}
+                        className="flex flex-col gap-4"
+                    >
+                        <Input
+                            type="email"
+                            placeholder="email"
+                            required
                             className={``}
                         />
-                        <Input 
-                            type="password" 
-                            placeholder="password" 
-                            required 
+                        <Input
+                            type="password"
+                            placeholder="password"
+                            required
                             className={``}
                         />
-                        
+
                         {/* Login Button */}
-                        <Button 
-                            type="submit"
-                            className={`mt-2`}
-                        >
+                        <Button type="submit" className={`mt-2`}>
                             log in
                         </Button>
                     </form>
@@ -85,15 +84,14 @@ export default function LoginPage() {
                     </div>
 
                     {/* Google Button */}
-                    <Button 
-                        type="button" 
+                    <Button
+                        type="button"
                         onClick={handleGoogleLogin}
                         className={`w-full gap-3 bg-white text-stone-900 hover:bg-white/90`}
                     >
                         <GoogleIcon className="h-5 w-5" />
                         <span>sign up</span>
                     </Button>
-
                 </div>
             </div>
         </main>
