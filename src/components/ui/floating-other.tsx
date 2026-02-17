@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
-import * as Shapes from '../shapes-homepage'
+import * as Shapes from '../shapes-other'
 
 interface ShapeEntity {
     id: number
@@ -50,7 +50,7 @@ export default function FloatingScreensaver({
                 ]
 
             // Adjusted Scale: 500-900 is big but manageable. 1400 was too big for separation to work well.
-            const size = 600 + Math.random() * 400
+            const size = 200 + Math.random() * 400
 
             // Spawn logic (Keep existing logic to spawn at edges)
             const side = Math.floor(Math.random() * 4)

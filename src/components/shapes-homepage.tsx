@@ -6,7 +6,7 @@ interface ShapeProps extends React.SVGProps<SVGSVGElement> {}
  * Shape 1: Wide complex bubble with 2 small solid satellites
  * Original: 1420x923
  */
-export const FloatingShape1 = ({ className, ...props }: ShapeProps) => (
+export const fS1 = ({ className, ...props }: ShapeProps) => (
     <svg
         viewBox="0 0 1420 923"
         fill="none"
@@ -35,7 +35,7 @@ export const FloatingShape1 = ({ className, ...props }: ShapeProps) => (
  * Shape 2: Similar to 1 but more condensed
  * Original: 1370x940
  */
-export const FloatingShape2 = ({ className, ...props }: ShapeProps) => (
+export const fS2 = ({ className, ...props }: ShapeProps) => (
     <svg
         viewBox="0 0 1370 940"
         fill="none"
@@ -66,7 +66,7 @@ export const FloatingShape2 = ({ className, ...props }: ShapeProps) => (
  * Shape 3: Wider variant with large blob on right
  * Original: 1470x926
  */
-export const FloatingShape3 = ({ className, ...props }: ShapeProps) => (
+export const fS3 = ({ className, ...props }: ShapeProps) => (
     <svg
         viewBox="0 0 1470 926"
         fill="none"
@@ -99,7 +99,7 @@ export const FloatingShape3 = ({ className, ...props }: ShapeProps) => (
  * Shape 4: Taller structure with central loop
  * Original: 1270x827
  */
-export const FloatingShape4 = ({ className, ...props }: ShapeProps) => (
+export const fS4 = ({ className, ...props }: ShapeProps) => (
     <svg
         viewBox="0 0 1270 827"
         fill="none"
@@ -128,7 +128,7 @@ export const FloatingShape4 = ({ className, ...props }: ShapeProps) => (
  * Shape 5: Short and wide with 2 large satellites
  * Original: 1208x486
  */
-export const FloatingShape5 = ({ className, ...props }: ShapeProps) => (
+export const fS5 = ({ className, ...props }: ShapeProps) => (
     <svg
         viewBox="0 0 1208 486"
         fill="none"
@@ -161,7 +161,7 @@ export const FloatingShape5 = ({ className, ...props }: ShapeProps) => (
  * Shape 6: Condensed vertical cluster
  * Original: 1125x857
  */
-export const FloatingShape6 = ({ className, ...props }: ShapeProps) => (
+export const fS6 = ({ className, ...props }: ShapeProps) => (
     <svg
         viewBox="0 0 1125 857"
         fill="none"
@@ -194,7 +194,7 @@ export const FloatingShape6 = ({ className, ...props }: ShapeProps) => (
  * Shape 7: Wider variant of Shape 4
  * Original: 1244x827
  */
-export const FloatingShape7 = ({ className, ...props }: ShapeProps) => (
+export const fS7 = ({ className, ...props }: ShapeProps) => (
     <svg
         viewBox="0 0 1244 827"
         fill="none"
@@ -225,7 +225,7 @@ export const FloatingShape7 = ({ className, ...props }: ShapeProps) => (
  * Shape 8: Smaller, more separate elements
  * Original: 1125x486
  */
-export const FloatingShape8 = ({ className, ...props }: ShapeProps) => (
+export const fS8 = ({ className, ...props }: ShapeProps) => (
     <svg
         viewBox="0 0 1125 486"
         fill="none"
@@ -254,7 +254,7 @@ export const FloatingShape8 = ({ className, ...props }: ShapeProps) => (
  * Shape 9: Wide variant of Shape 8
  * Original: 1159x486
  */
-export const FloatingShape9 = ({ className, ...props }: ShapeProps) => (
+export const fS9 = ({ className, ...props }: ShapeProps) => (
     <svg
         viewBox="0 0 1159 486"
         fill="none"

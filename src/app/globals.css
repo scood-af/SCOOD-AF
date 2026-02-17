@@ -14,9 +14,9 @@
     --foreground: oklch(25% 0.04 330);
 
     /* MAIN: The Hot Pink header bar */
-    --main: oklch(65% 0.28 335);
+    --main: oklch(0.7285 0.2363 338.22);
 
-    --primary: oklch(83.29% 0.2331 132.51);
+    --primary: oklch(0.9114 0.227 131.65);
 
     /* MAIN FG: Text on the pink bar is dark in the image */
     --main-foreground: oklch(25% 0.04 330);
@@ -78,6 +78,7 @@
     --color-chart-4: var(--chart-4);
     --color-chart-5: var(--chart-5);
 
+    --font-family: var(--font-pixel);
     --spacing-boxShadowX: 4px;
     --spacing-boxShadowY: 4px;
     --spacing-reverseBoxShadowX: -4px;
@@ -101,4 +102,7 @@
     h6 {
         @apply font-heading;
     }
+}
+
+.pixel-text {
 }
