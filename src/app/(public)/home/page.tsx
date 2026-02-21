@@ -83,10 +83,10 @@ export default async function Homepage() {
         <main className="container mx-auto flex min-h-[80vh] flex-col items-center justify-center gap-8 p-4 md:flex-row md:items-stretch">
             {/* --- LEFT COLUMN: PROFILE CARD --- */}
             {/* We use custom Tailwind classes to match the thick border/shadow design */}
-            <Card className="w-full max-w-sm shrink-0 overflow-hidden rounded-[2rem] border-4 border-black bg-[#A3FF47] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+            <Card className="w-full max-w-sm shrink-0 overflow-hidden rounded-[2rem] border-4 border-border bg-primary shadow-shadow">
                 <CardHeader className="flex flex-col items-center p-6 pb-2">
                     {/* Avatar Image Container with Border */}
-                    <div className="relative mb-4 h-48 w-48 overflow-hidden rounded-2xl border-4 border-black">
+                    <div className="relative mb-4 h-48 w-48 overflow-hidden rounded-2xl border-4 border-border">
                         <Image
                             src={profile.avatar_url || '/placeholder.svg'} // Fallback if no avatar
                             alt={profile.full_name || 'User'}
@@ -96,20 +96,20 @@ export default async function Homepage() {
                         />
                     </div>
                     {/* Name */}
-                    <h2 className="text-2xl font-extrabold tracking-tight text-black">
+                    <h2 className="text-2xl font-extrabold tracking-tight text-foreground">
                         {profile.full_name || 'Anon User'}
                     </h2>
                 </CardHeader>
-                <CardContent className="flex flex-col gap-4 p-6 pt-2 text-center text-black">
+                <CardContent className="flex flex-col gap-4 p-6 pt-2 text-center text-foreground">
                     {/* Role / Tagline */}
                     <div>
-                        <span className="rounded-full border-2 border-black bg-[#CFFF95] px-4 py-1 text-sm font-bold">
+                        <span className="rounded-full border-2 border-border bg-chart-1 px-4 py-1 text-sm font-bold">
                             {formattedRole} Enthusiast
                         </span>
                     </div>
 
                     {/* Likes Section */}
-                    <div className="mt-2 w-full rounded-xl border-2 border-black bg-[#CFFF95]/50 p-3 text-left">
+                    <div className="mt-2 w-full rounded-xl border-2 border-border bg-chart-1/50 p-3 text-left">
                         <p className="font-bold">Likes:</p>
                         <p className="text-sm font-medium leading-tight">
                             {likesText}
@@ -121,8 +121,8 @@ export default async function Homepage() {
             {/* --- RIGHT COLUMN: ACTIONS --- */}
             <div className="flex w-full max-w-2xl flex-col justify-between gap-6">
                 {/* The Prompt Box */}
-                <div className="flex min-h-[180px] items-center justify-center rounded-[2rem] border-4 border-black bg-[#A3FF47] p-8 text-center shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-                    <h1 className="text-3xl font-extrabold text-black md:text-5xl">
+                <div className="flex min-h-[180px] items-center justify-center rounded-[2rem] border-4 border-border bg-primary p-8 text-center shadow-shadow">
+                    <h1 className="text-3xl font-extrabold text-foreground md:text-5xl">
                         "What are you in the mood for?"
                     </h1>
                 </div>
@@ -132,7 +132,7 @@ export default async function Homepage() {
                     {/* Hangout Link */}
                     <Link
                         href="/pools/hangout"
-                        className="group relative flex aspect-square w-full items-end overflow-hidden rounded-3xl border-4 border-black bg-stone-800 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-transform hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                        className="group relative flex aspect-square w-full items-end overflow-hidden rounded-3xl border-4 border-border bg-foreground shadow-shadow transition-transform hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_var(--border)] active:translate-y-0 active:shadow-none"
                     >
                         {/* Replace with your actual Minecraft chicken image */}
                         <Image
@@ -141,8 +141,8 @@ export default async function Homepage() {
                             fill
                             className="object-cover opacity-80 transition-opacity group-hover:opacity-100"
                         />
-                        <div className="absolute bottom-0 w-full bg-black/50 p-2 text-center backdrop-blur-sm">
-                            <span className="text-xl font-extrabold text-white">
+                        <div className="absolute bottom-0 w-full bg-foreground/50 p-2 text-center backdrop-blur-sm">
+                            <span className="text-xl font-extrabold text-background">
                                 Hangout
                             </span>
                         </div>
@@ -151,7 +151,7 @@ export default async function Homepage() {
                     {/* Date Link */}
                     <Link
                         href="/dating/intro" 
-                        className="group relative flex aspect-square w-full items-end overflow-hidden rounded-3xl border-4 border-black bg-stone-800 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-transform hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                        className="group relative flex aspect-square w-full items-end overflow-hidden rounded-3xl border-4 border-border bg-foreground shadow-shadow transition-transform hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_var(--border)] active:translate-y-0 active:shadow-none"
                     >
                         {/* Replace with holding hands image */}
                         <Image
@@ -160,15 +160,15 @@ export default async function Homepage() {
                             fill
                             className="object-cover opacity-80 transition-opacity group-hover:opacity-100"
                         />
-                        <div className="absolute bottom-0 w-full bg-black/50 p-2 text-center backdrop-blur-sm">
-                        <span className="text-xl font-extrabold text-white">Date.</span>
+                        <div className="absolute bottom-0 w-full bg-foreground/50 p-2 text-center backdrop-blur-sm">
+                        <span className="text-xl font-extrabold text-background">Date.</span>
                         </div>
                     </Link>
 
                     {/* Study Buddy Link */}
                     <Link
                         href="/pools/study"
-                        className="group relative flex aspect-square w-full items-end overflow-hidden rounded-3xl border-4 border-black bg-stone-800 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-transform hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                        className="group relative flex aspect-square w-full items-end overflow-hidden rounded-3xl border-4 border-border bg-foreground shadow-shadow transition-transform hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_var(--border)] active:translate-y-0 active:shadow-none"
                     >
                         {/* Replace with typing image */}
                         <Image
@@ -177,13 +177,16 @@ export default async function Homepage() {
                             fill
                             className="object-cover opacity-80 transition-opacity group-hover:opacity-100"
                         />
-                        <div className="absolute bottom-0 w-full bg-black/50 p-2 text-center backdrop-blur-sm">
-                            <span className="text-xl font-extrabold leading-tight text-white">
+                        <div className="absolute bottom-0 w-full bg-foreground/50 p-2 text-center backdrop-blur-sm">
+                            <span className="text-xl font-extrabold leading-tight text-background">
                                 Study Buddy
                             </span>
                         </div>
                     </Link>
                 </div>
+            </div>
+            <div className='h-100vh'>
+                Hello
             </div>
         </main>
     )

@@ -59,13 +59,13 @@ export default async function DatingPoolPage() {
   const myLoveLang = myProfile?.dating_profiles?.[0]?.love_language || "N/A"
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#FEFCE8] p-4 md:flex-row md:p-8 gap-8">
+    <div className="flex min-h-screen flex-col bg-background p-4 md:flex-row md:p-8 gap-8">
       
       {/* --- LEFT SIDEBAR (My Profile) --- */}
       <aside className="w-full shrink-0 md:w-80">
-        <div className="sticky top-8 flex flex-col overflow-hidden rounded-4xl border-4 border-black bg-[#A3FF47] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+        <div className="sticky top-8 flex flex-col overflow-hidden rounded-4xl border-4 border-border bg-primary shadow-shadow">
           <div className="flex flex-col items-center p-6 pb-2">
-            <div className="relative mb-4 h-40 w-40 overflow-hidden rounded-2xl border-4 border-black">
+            <div className="relative mb-4 h-40 w-40 overflow-hidden rounded-2xl border-4 border-border">
               <Image
                 src={myProfile?.avatar_url || '/placeholder.svg'}
                 alt="Me"
@@ -73,26 +73,26 @@ export default async function DatingPoolPage() {
                 className="object-cover"
               />
             </div>
-            <h2 className="text-2xl font-extrabold text-black">{myProfile?.full_name}</h2>
-            <p className="text-center font-medium text-black/70">
+            <h2 className="text-2xl font-extrabold text-foreground">{myProfile?.full_name}</h2>
+            <p className="text-center font-medium text-foreground/70">
                 {myProfile?.role?.toUpperCase() || 'UDAYANA' }
             </p>
           </div>
           
           <div className="flex-1 space-y-4 p-6 pt-2">
             {/* Bio / Tagline */}
-            <div className="rounded-xl border-2 border-black bg-[#CFFF95] p-3">
-               <p className="text-xs font-bold uppercase text-black/60">Bio</p>
-               <p className="font-bold text-black">{myProfile?.bio || "Cardiology Enthusiast"}</p>
+            <div className="rounded-xl border-2 border-border bg-chart-1 p-3">
+               <p className="text-xs font-bold uppercase text-foreground/60">Bio</p>
+               <p className="font-bold text-foreground">{myProfile?.bio || "Cardiology Enthusiast"}</p>
             </div>
 
-            <div className="space-y-1 text-sm font-bold text-black">
+            <div className="space-y-1 text-sm font-bold text-foreground">
                 <p>Likes:</p>
                 <p className="opacity-70">{myHobbies}</p>
             </div>
 
-            <div className="mt-8 rounded-xl bg-black/10 p-4 text-center">
-                <p className="text-lg font-extrabold leading-tight text-black">
+            <div className="mt-8 rounded-xl bg-foreground/10 p-4 text-center">
+                <p className="text-lg font-extrabold leading-tight text-foreground">
                     Please do Mind Your Manner yh :D
                 </p>
             </div>
@@ -103,7 +103,7 @@ export default async function DatingPoolPage() {
       {/* --- RIGHT CONTENT (The Grid) --- */}
       <main className="flex-1">
         <div className="mb-8 flex items-center justify-between">
-            <h1 className="text-3xl font-extrabold text-[#3D3D3D] md:text-5xl uppercase leading-none">
+            <h1 className="text-3xl font-extrabold text-foreground md:text-5xl uppercase leading-none">
                 Welcome to the <br/>Dating Pool!
             </h1>
             <div className="flex flex-col gap-2 text-right">
@@ -117,9 +117,9 @@ export default async function DatingPoolPage() {
             {poolUsers?.map((person) => {
                 const dating = person.dating_profiles[0] // Since it's 1-to-1
                 return (
-                    <div key={person.id} className="flex overflow-hidden rounded-3xl border-4 border-black bg-[#A3FF47] shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-transform hover:-translate-y-1">
+                    <div key={person.id} className="flex overflow-hidden rounded-3xl border-4 border-border bg-primary shadow-shadow transition-transform hover:-translate-y-1">
                         {/* Avatar Left */}
-                        <div className="relative w-1/3 border-r-4 border-black">
+                        <div className="relative w-1/3 border-r-4 border-border">
                             <Image 
                                 src={person.avatar_url || '/placeholder.svg'}
                                 alt={person.full_name || 'User'}
@@ -130,21 +130,21 @@ export default async function DatingPoolPage() {
                         {/* Info Right */}
                         <div className="flex flex-1 flex-col justify-center p-4 gap-2">
                             <div>
-                                <h3 className="text-xl font-extrabold leading-none text-black">{person.full_name}</h3>
-                                <p className="text-xs font-bold text-black/60">FK Udayana</p>
+                                <h3 className="text-xl font-extrabold leading-none text-foreground">{person.full_name}</h3>
+                                <p className="text-xs font-bold text-foreground/60">FK Udayana</p>
                             </div>
                             
-                            <div className="w-full h-1 bg-black rounded-full my-1"></div>
+                            <div className="w-full h-1 bg-foreground rounded-full my-1"></div>
 
                             <div className="flex flex-wrap gap-1">
                                 {dating?.gender && (
-                                    <span className="text-[10px] font-bold border border-black px-2 py-0.5 rounded-full bg-white/50">{dating.gender}</span>
+                                    <span className="text-[10px] font-bold border border-border px-2 py-0.5 rounded-full bg-secondary-background/50">{dating.gender}</span>
                                 )}
                                 {dating?.relationship_goals && (
-                                    <span className="text-[10px] font-bold border border-black px-2 py-0.5 rounded-full bg-white/50">{dating.relationship_goals}</span>
+                                    <span className="text-[10px] font-bold border border-border px-2 py-0.5 rounded-full bg-secondary-background/50">{dating.relationship_goals}</span>
                                 )}
                                 {dating?.love_language && (
-                                    <span className="text-[10px] font-bold border border-black px-2 py-0.5 rounded-full bg-white/50">{dating.love_language}</span>
+                                    <span className="text-[10px] font-bold border border-border px-2 py-0.5 rounded-full bg-secondary-background/50">{dating.love_language}</span>
                                 )}
                             </div>
                         </div>

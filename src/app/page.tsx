@@ -21,7 +21,7 @@ export default function LandingPage() {
                 <div className="relative flex h-full w-full flex-col items-center justify-center px-4 text-center">
                     <div className="peer z-50 flex w-fit flex-col items-center justify-center gap-10 transition-transform duration-500 ease-out hover:scale-116">
                         {/* Top Badge */}
-                        <div className="-rotate-5 rounded-2xl border-4 border-border bg-secondary-background px-6 py-2 shadow-[4px_4px_0px_0px_var(--border)] transition-transform hover:rotate-0">
+                        <div className="-rotate-5 rounded-2xl border-4 border-border bg-secondary-background px-6 py-2 shadow-shadow transition-transform hover:rotate-0">
                             <span className="text-lg font-black uppercase tracking-wide text-foreground">
                                 ✨ Match. Chat! Date?
                             </span>

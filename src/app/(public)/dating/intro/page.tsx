@@ -75,10 +75,10 @@ export default function DatingIntroPage() {
     <button
       onClick={onClick}
       className={cn(
-        'rounded-full border-2 border-black px-6 py-2 text-lg font-bold transition-all hover:-translate-y-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]',
+        'rounded-full border-2 border-border px-6 py-2 text-lg font-bold transition-all hover:-translate-y-1 shadow-shadow',
         isSelected
-          ? 'bg-[#FF47D6] text-white' // Selected: Hot Pink
-          : 'bg-[#FF47D6]/40 text-black hover:bg-[#FF47D6]' // Unselected: Light Pink
+          ? 'bg-main text-background' // Selected: Hot Pink
+          : 'bg-main/40 text-foreground hover:bg-main' // Unselected: Light Pink
       )}
     >
       {label}
@@ -86,8 +86,8 @@ export default function DatingIntroPage() {
   )
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#FEFCE8] p-4 text-center">
-      <h1 className="mb-12 text-4xl font-extrabold text-[#3D3D3D] md:text-5xl">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4 text-center">
+      <h1 className="mb-12 text-4xl font-extrabold text-foreground md:text-5xl">
         What&apos;s ur type?
       </h1>
 
@@ -127,7 +127,7 @@ export default function DatingIntroPage() {
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="rounded-full border-4 border-black bg-[#A3FF47] px-8 py-4 text-xl font-extrabold text-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-transform hover:-translate-y-1 active:translate-y-0 disabled:opacity-50"
+          className="rounded-full border-4 border-border bg-primary px-8 py-4 text-xl font-extrabold text-foreground shadow-shadow transition-transform hover:-translate-y-1 active:translate-y-0 disabled:opacity-50"
         >
           {loading ? 'SAVING...' : 'GO FIND ME MY LOVE!'}
         </button>
