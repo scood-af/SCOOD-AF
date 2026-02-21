@@ -2,22 +2,22 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Pixelify_Sans } from 'next/font/google'
 import ClickSpark from '@/components/ClickSpark';
-import StaggeredMenu from '@/components/StaggeredMenu';
+// import StaggeredMenu from '@/components/StaggeredMenu';
 import './globals.css'
 
 
-const menuItems = [
-  { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
-  { label: 'About', ariaLabel: 'Learn about us', link: '/about' },
-  { label: 'Services', ariaLabel: 'View our services', link: '/services' },
-  { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
-];
+// const menuItems = [
+//   { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
+//   { label: 'About', ariaLabel: 'Learn about us', link: '/about' },
+//   { label: 'Services', ariaLabel: 'View our services', link: '/services' },
+//   { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
+// ];
 
-const socialItems = [
-  { label: 'Twitter', link: 'https://twitter.com' },
-  { label: 'GitHub', link: 'https://github.com' },
-  { label: 'LinkedIn', link: 'https://linkedin.com' }
-];
+// const socialItems = [
+//   { label: 'Twitter', link: 'https://twitter.com' },
+//   { label: 'GitHub', link: 'https://github.com' },
+//   { label: 'LinkedIn', link: 'https://linkedin.com' }
+// ];
 
 
 const pixelify = Pixelify_Sans({
@@ -58,7 +58,7 @@ export default function RootLayout({
                     sparkCount={8}
                     duration={400}
                 >
-                    <StaggeredMenu
+                    {/* <StaggeredMenu
                         position="right"
                         isFixed={true}
                         items={menuItems}
@@ -71,8 +71,8 @@ export default function RootLayout({
                         colors={['var(--primary)', 'var(--main)']}
                         logoUrl="/path-to-your-logo.svg"
                         accentColor="var(--main)"
-                    />
-                    <div className="pt-16 md:pt-24 min-h-screen">
+                    /> */}
+                    <div className="min-h-screen">
                         {children}
                     </div>
                 </ClickSpark>

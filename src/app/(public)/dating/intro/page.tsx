@@ -86,7 +86,7 @@ export default function DatingIntroPage() {
   )
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4 text-center">
+    <div className="flex flex-col items-center my-auto justify-center bg-background p-4 text-center">
       <h1 className="mb-12 text-4xl font-extrabold text-foreground md:text-5xl">
         What&apos;s ur type?
       </h1>

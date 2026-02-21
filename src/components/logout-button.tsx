@@ -14,5 +14,5 @@ export function LogoutButton() {
         router.push('/auth/login')
     }
 
-    return <Button onClick={logout}>Logout</Button>
+    return <Button variant={null} onClick={logout} className="-my-1 text-sm md:text-xl font-bold">⎋ Logout</Button>
 }

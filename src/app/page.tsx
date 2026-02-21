@@ -14,7 +14,7 @@ export default function LandingPage() {
                 shapeColor="var(--main)"
                 className="h-full w-full"
             >
-                <LogoutButton />
+                {/* <LogoutButton /> */}
                 {/* LAYOUT CONTAINER 
                    Removed 'group' from here so the full screen is no longer the trigger.
                 */}
