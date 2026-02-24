@@ -99,7 +99,7 @@ export default function PoolCard({ person, currentUserId }: { person: Person, cu
             {/* THE CARD (Triggers the Modal) */}
             <div 
                 onClick={() => setIsOpen(true)}
-                className="group flex cursor-pointer overflow-hidden rounded-[2rem] border-4 border-border bg-primary shadow-shadow transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-[4px_4px_0px_0px_var(--tw-shadow-color)] active:translate-x-[8px] active:translate-y-[8px] active:shadow-none"
+                className="group flex cursor-pointer overflow-hidden rounded-4xl border-4 border-border bg-primary shadow-shadow transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-[4px_4px_0px_0px_var(--tw-shadow-color)] active:translate-x-2 active:translate-y-2 active:shadow-none"
             >
                 {/* Avatar Left */}
                 <div className="relative w-2/5 shrink-0 border-r-4 border-border bg-background md:w-1/3">
@@ -114,7 +114,7 @@ export default function PoolCard({ person, currentUserId }: { person: Person, cu
                 {/* Info Right */}
                 <div className="flex flex-1 flex-col justify-center gap-3 p-4 md:p-5">
                     <div>
-                        <h3 className="line-clamp-1 text-xl font-extrabold leading-none tracking-tight text-foreground lg:text-2xl">
+                        <h3 className="text-xl font-extrabold leading-none tracking-tight text-foreground lg:text-2xl">
                             {person.full_name}
                         </h3>
                         <p className="mt-1 text-xs font-extrabold uppercase text-foreground/70 lg:text-sm">

@@ -7,6 +7,7 @@ import { SVGProps } from 'react'
 import FloatingScreensaver from '@/components/ui/floating-other'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 // --- Assets ---
 
@@ -36,10 +37,6 @@ export default function LoginPage() {
         console.log('Email login triggered')
     }
 
-    // Shared styles to ensure Inputs and Buttons match perfectly
-    // const pillStyles = "h-14 rounded-full border-2 border-stone-800 text-center text-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
-    // const inputColor = "bg-[#fffcd6] focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-stone-400/70"
-
     return (
         <main className="relative h-screen w-full overflow-hidden font-sans">
             {/* Background Layer: Lime Green with Pink Flowers */}
@@ -53,46 +50,63 @@ export default function LoginPage() {
 
             {/* Content Layer */}
             <div className="relative z-10 flex min-h-full items-center justify-center p-4">
-                <div className="w-full max-w-sm space-y-4">
-                    <form
-                        onSubmit={handleEmailLogin}
-                        className="flex flex-col gap-4"
-                    >
-                        <Input
-                            type="email"
-                            placeholder="email"
-                            required
-                            className={``}
-                        />
-                        <Input
-                            type="password"
-                            placeholder="password"
-                            required
-                            className={``}
-                        />
-
-                        {/* Login Button */}
-                        <Button type="submit" className={`mt-2`}>
-                            log in
+                <Card className="w-full max-w-md overflow-hidden rounded-[2.5rem] border-4 border-border bg-background shadow-shadow">
+                    <CardHeader className="text-center pb-2">
+                        <CardTitle className="text-4xl font-extrabold uppercase tracking-tight">Welcome Back!</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex flex-col gap-6 p-8 pt-4">
+                        {/* Google Button */}
+                        <Button
+                            type="button"
+                            onClick={handleGoogleLogin}
+                            className="w-full gap-3 rounded-xl border-4 border-border bg-white text-stone-900 shadow-sm hover:bg-gray-50 hover:-translate-y-1 hover:shadow-md transition-all h-14 text-lg font-bold"
+                        >
+                            <GoogleIcon className="h-6 w-6" />
+                            <span>Continue with Google</span>
                         </Button>
-                    </form>
 
-                    <div className="relative py-1 text-center">
-                        <span className="bg-transparent px-2 text-sm font-bold text-stone-800">
-                            or
-                        </span>
-                    </div>
+                        <div className="relative flex items-center justify-center">
+                            <div className="absolute inset-0 flex items-center">
+                                <span className="w-full border-t-4 border-border/20"></span>
+                            </div>
+                            <span className="relative bg-background px-4 text-sm font-extrabold uppercase text-muted-foreground">Or with email</span>
+                        </div>
 
-                    {/* Google Button */}
-                    <Button
-                        type="button"
-                        onClick={handleGoogleLogin}
-                        className={`w-full gap-3 bg-white text-stone-900 hover:bg-white/90`}
-                    >
-                        <GoogleIcon className="h-5 w-5" />
-                        <span>sign up</span>
-                    </Button>
-                </div>
+                        <form onSubmit={handleEmailLogin} className="flex flex-col gap-4">
+                            <div className="space-y-2">
+                                <label className="text-sm font-extrabold uppercase ml-1">Email</label>
+                                <Input
+                                    type="email"
+                                    placeholder="hello@example.com"
+                                    required
+                                    className="h-14 rounded-xl border-4 border-border bg-secondary/20 px-4 text-lg font-bold placeholder:text-muted-foreground/50 focus-visible:ring-0 focus-visible:shadow-[4px_4px_0_0_var(--border)] transition-all"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-sm font-extrabold uppercase ml-1">Password</label>
+                                <Input
+                                    type="password"
+                                    placeholder="••••••••"
+                                    required
+                                    className="h-14 rounded-xl border-4 border-border bg-secondary/20 px-4 text-lg font-bold placeholder:text-muted-foreground/50 focus-visible:ring-0 focus-visible:shadow-[4px_4px_0_0_var(--border)] transition-all"
+                                />
+                            </div>
+
+                            <Button type="submit" className="mt-2 h-14 w-full rounded-xl border-4 border-border bg-primary text-xl font-extrabold uppercase text-foreground shadow-sm hover:-translate-y-1 hover:shadow-[4px_4px_0_0_var(--border)] transition-all active:translate-y-0 active:shadow-none">
+                                {loading ? 'Logging in...' : 'Log In'}
+                            </Button>
+                        </form>
+
+                        <div className="text-center mt-2">
+                            <p className="text-sm font-bold text-muted-foreground">
+                                Don't have an account?{' '}
+                                <Link href="/auth/sign-up" className="text-foreground underline decoration-4 underline-offset-4 hover:text-primary transition-colors">
+                                    Sign Up
+                                </Link>
+                            </p>
+                        </div>
+                    </CardContent>
+                </Card>
             </div>
         </main>
     )

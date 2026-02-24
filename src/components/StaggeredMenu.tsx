@@ -517,10 +517,22 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
               ref={accountPanelRef}
               className="absolute top-full left-0 mt-10 w-60 bg-secondary-background border-4 border-border rounded-3xl shadow-shadow p-3 flex flex-col gap-2 opacity-0 invisible origin-top-left cursor-default"
             >
-               <button className="flex items-center gap-3 p-2 hover:bg-main/20 rounded-xl transition-colors text-left font-bold text-foreground w-full">
+               <button 
+                  onClick={() => {
+                    router.push('/profile');
+                    setAccountOpen(false);
+                  }}
+                  className="flex items-center gap-3 p-2 hover:bg-main/20 rounded-xl transition-colors text-left font-bold text-foreground w-full"
+               >
                   <UserIcon className="w-5 h-5" /> Profile
                </button>
-               <button className="flex items-center gap-3 p-2 hover:bg-main/20 rounded-xl transition-colors text-left font-bold text-foreground w-full">
+               <button 
+                  onClick={() => {
+                    router.push('/settings');
+                    setAccountOpen(false);
+                  }}
+                  className="flex items-center gap-3 p-2 hover:bg-main/20 rounded-xl transition-colors text-left font-bold text-foreground w-full"
+               >
                   <SettingsIcon className="w-5 h-5" /> Settings
                </button>
                <div className="h-1 bg-border rounded-full my-1 opacity-20" />

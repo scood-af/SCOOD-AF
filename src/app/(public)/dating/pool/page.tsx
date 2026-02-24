@@ -26,10 +26,12 @@ export default async function DatingPoolPage() {
   const { data: myProfile } = await supabase
     .from('profiles')
     .select(`
-        full_name, avatar_url, role, bio,
+        full_name, avatar_url, role, bio, institution, likes,
         dating_profiles!inner(
+            gender,
             love_language, 
-            preference
+            preference,
+            relationship_goals
         )
     `)
     .eq('id', user.id)
@@ -52,7 +54,9 @@ export default async function DatingPoolPage() {
     .limit(50)
 
   // Helper to get hobbies text
-  const myHobbies = myProfile?.hangout_profiles?.[0]?.hobbies || "No hobbies added"
+  const myHobbies = myProfile?.likes || 'Update your profile to add likes/hobby!'
+  const myDating = myProfile?.dating_profiles
+//   console.log(myProfile?.dating_profiles)
 
   return (
     // Uses h-full to respect the 100vh wrapper from layout.tsx
@@ -82,12 +86,37 @@ export default async function DatingPoolPage() {
                     {myProfile?.full_name}
                 </h2>
                 <div className="text-sm font-medium tracking-tight text-foreground/80 lg:text-base">
-                    {myProfile?.role?.toUpperCase() || 'UDAYANA'}
+                    {myProfile?.role || 'Student'}, {myProfile?.institution || 'Universitas Udayana'}
+                </div>
+                <div className="text-xs font-bold tracking-wide text-foreground/60">
                 </div>
             </CardHeader>
             
             <CardContent className="flex min-h-0 flex-1 flex-col gap-3 p-5 text-left text-foreground">
                 <hr className="w-full border-2 border-border" />
+
+                <div className="flex flex-wrap gap-2">
+                    {myDating?.gender && (
+                        <span className="rounded-md border-2 border-border bg-main px-2 py-1 text-[10px] font-extrabold uppercase text-foreground shadow-[2px_2px_0_0_var(--tw-shadow-color)] shadow-border">
+                            {myDating.gender}
+                        </span>
+                    )}
+                    {myDating?.preference && (
+                        <span className="rounded-md border-2 border-border bg-background px-2 py-1 text-[10px] font-extrabold uppercase text-foreground shadow-[2px_2px_0_0_var(--tw-shadow-color)] shadow-border">
+                            Looking for: {myDating.preference}
+                        </span>
+                    )}
+                    {myDating?.relationship_goals && (
+                        <span className="rounded-md border-2 border-border bg-main px-2 py-1 text-[10px] font-extrabold uppercase text-secondary-background shadow-[2px_2px_0_0_var(--tw-shadow-color)] shadow-border">
+                            {myDating.relationship_goals}
+                        </span>
+                    )}
+                    {myDating?.love_language && (
+                        <span className="rounded-md border-2 border-border bg-main/30 px-2 py-1 text-[10px] font-extrabold uppercase text-foreground shadow-[2px_2px_0_0_var(--tw-shadow-color)] shadow-border">
+                            {myDating.love_language}
+                        </span>
+                    )}
+                </div>
 
                 {/* Bio Section - Tighter padding */}
                 <div className="w-full shrink-0 rounded-xl border-4 border-border bg-background p-3 shadow-[4px_4px_0_0_var(--tw-shadow-color)] shadow-border lg:p-4">
@@ -125,7 +154,7 @@ export default async function DatingPoolPage() {
                 
                 <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
                     <Link 
-                        href="/" 
+                        href="/home" 
                         className="flex items-center justify-center rounded-xl border-4 border-border bg-primary px-5 py-2.5 font-extrabold uppercase tracking-wide text-foreground transition-transform hover:-translate-y-1 hover:shadow-[4px_4px_0_0_var(--tw-shadow-color)] shadow-border active:translate-y-0 active:shadow-none lg:px-6 lg:py-3"
                     >
                         Home

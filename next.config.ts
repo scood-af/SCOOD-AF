@@ -22,6 +22,12 @@ const nextConfig: NextConfig = {
                 hostname: 'ui.shadcn.com',
                 pathname: '/**', // Allows all paths from this domain
             },
+            {
+                protocol: 'https',
+                hostname: 'msvnbggkjxdrzrkwfamw.supabase.co', // Your exact Supabase domain
+                port: '',
+                pathname: '/storage/v1/object/public/**', // Allows everything in your public buckets
+            },
         ],
     },
 }
