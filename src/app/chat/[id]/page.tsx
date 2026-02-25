@@ -25,13 +25,16 @@ export default async function ChatPage({ params }: Props) {
         }
     )
 
-    const { data: { user } } = await supabase.auth.getUser()
+    const {
+        data: { user },
+    } = await supabase.auth.getUser()
     if (!user) redirect('/auth/login')
 
     // 3. Use the unwrapped chatId in your query
     const { data: chatData, error } = await supabase
         .from('active_chats')
-        .select(`
+        .select(
+            `
             id,
             match_requests!inner(
                 sender_id,
@@ -39,15 +42,23 @@ export default async function ChatPage({ params }: Props) {
                 sender:profiles!sender_id(id, full_name, avatar_url),
                 receiver:profiles!receiver_id(id, full_name, avatar_url)
             )
-        `)
+        `
+        )
         .eq('id', chatId) // <-- Updated here
         .single()
 
     if (error || !chatData) redirect('/dating/pool')
 
-    const request = chatData.match_requests
+    // match_requests is returned as an array when using joins in Supabase select
+    const request = Array.isArray(chatData.match_requests)
+        ? chatData.match_requests[0]
+        : chatData.match_requests
     const isSender = request.sender_id === user.id
-    const matchProfile = isSender ? request.receiver : request.sender
+    
+    // Profiles are returned as arrays in many-to-one joins if not explicitly cast or handled
+    const matchProfile = isSender 
+        ? (Array.isArray(request.receiver) ? request.receiver[0] : request.receiver)
+        : (Array.isArray(request.sender) ? request.sender[0] : request.sender)
 
     const { data: initialMessages } = await supabase
         .from('ephemeral_messages')
@@ -56,11 +67,11 @@ export default async function ChatPage({ params }: Props) {
         .order('created_at', { ascending: true })
 
     return (
-        <ChatClient 
+        <ChatClient
             chatId={chatId} // <-- Updated here
-            currentUserId={user.id} 
-            matchProfile={matchProfile} 
-            initialMessages={initialMessages || []} 
+            currentUserId={user.id}
+            matchProfile={matchProfile}
+            initialMessages={initialMessages || []}
         />
     )
 }

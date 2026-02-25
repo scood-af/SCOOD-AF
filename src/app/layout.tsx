@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Pixelify_Sans } from 'next/font/google'
-import ClickSpark from '@/components/ClickSpark';
+import ClickSpark from '@/components/ClickSpark'
 // import StaggeredMenu from '@/components/StaggeredMenu';
 import './globals.css'
-
 
 // const menuItems = [
 //   { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
@@ -18,7 +17,6 @@ import './globals.css'
 //   { label: 'GitHub', link: 'https://github.com' },
 //   { label: 'LinkedIn', link: 'https://linkedin.com' }
 // ];
-
 
 const pixelify = Pixelify_Sans({
     subsets: ['latin'],
@@ -52,7 +50,7 @@ export default function RootLayout({
                 className={`${geistSans.variable} ${geistMono.variable} ${pixelify.variable} antialiased`}
             >
                 <ClickSpark
-                    sparkColor='#000'
+                    sparkColor="#000"
                     sparkSize={10}
                     sparkRadius={15}
                     sparkCount={8}
@@ -72,9 +70,7 @@ export default function RootLayout({
                         logoUrl="/path-to-your-logo.svg"
                         accentColor="var(--main)"
                     /> */}
-                    <div className="min-h-screen">
-                        {children}
-                    </div>
+                    <div className="min-h-screen">{children}</div>
                 </ClickSpark>
             </body>
         </html>

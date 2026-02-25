@@ -52,7 +52,9 @@ export default function LoginPage() {
             <div className="relative z-10 flex min-h-full items-center justify-center p-4">
                 <Card className="w-full max-w-md overflow-hidden rounded-[2.5rem] border-4 border-border bg-background shadow-shadow">
                     <CardHeader className="text-center pb-2">
-                        <CardTitle className="text-4xl font-extrabold uppercase tracking-tight">Welcome Back!</CardTitle>
+                        <CardTitle className="text-4xl font-extrabold uppercase tracking-tight">
+                            Welcome Back!
+                        </CardTitle>
                     </CardHeader>
                     <CardContent className="flex flex-col gap-6 p-8 pt-4">
                         {/* Google Button */}
@@ -69,12 +71,19 @@ export default function LoginPage() {
                             <div className="absolute inset-0 flex items-center">
                                 <span className="w-full border-t-4 border-border/20"></span>
                             </div>
-                            <span className="relative bg-background px-4 text-sm font-extrabold uppercase text-muted-foreground">Or with email</span>
+                            <span className="relative bg-background px-4 text-sm font-extrabold uppercase text-muted-foreground">
+                                Or with email
+                            </span>
                         </div>
 
-                        <form onSubmit={handleEmailLogin} className="flex flex-col gap-4">
+                        <form
+                            onSubmit={handleEmailLogin}
+                            className="flex flex-col gap-4"
+                        >
                             <div className="space-y-2">
-                                <label className="text-sm font-extrabold uppercase ml-1">Email</label>
+                                <label className="text-sm font-extrabold uppercase ml-1">
+                                    Email
+                                </label>
                                 <Input
                                     type="email"
                                     placeholder="hello@example.com"
@@ -83,7 +92,9 @@ export default function LoginPage() {
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-sm font-extrabold uppercase ml-1">Password</label>
+                                <label className="text-sm font-extrabold uppercase ml-1">
+                                    Password
+                                </label>
                                 <Input
                                     type="password"
                                     placeholder="••••••••"
@@ -92,7 +103,10 @@ export default function LoginPage() {
                                 />
                             </div>
 
-                            <Button type="submit" className="mt-2 h-14 w-full rounded-xl border-4 border-border bg-primary text-xl font-extrabold uppercase text-foreground shadow-sm hover:-translate-y-1 hover:shadow-[4px_4px_0_0_var(--border)] transition-all active:translate-y-0 active:shadow-none">
+                            <Button
+                                type="submit"
+                                className="mt-2 h-14 w-full rounded-xl border-4 border-border bg-primary text-xl font-extrabold uppercase text-foreground shadow-sm hover:-translate-y-1 hover:shadow-[4px_4px_0_0_var(--border)] transition-all active:translate-y-0 active:shadow-none"
+                            >
                                 {loading ? 'Logging in...' : 'Log In'}
                             </Button>
                         </form>
@@ -100,7 +114,10 @@ export default function LoginPage() {
                         <div className="text-center mt-2">
                             <p className="text-sm font-bold text-muted-foreground">
                                 Don't have an account?{' '}
-                                <Link href="/auth/sign-up" className="text-foreground underline decoration-4 underline-offset-4 hover:text-primary transition-colors">
+                                <Link
+                                    href="/auth/sign-up"
+                                    className="text-foreground underline decoration-4 underline-offset-4 hover:text-primary transition-colors"
+                                >
                                     Sign Up
                                 </Link>
                             </p>
