@@ -46,7 +46,7 @@ export default function SignupPage() {
     const handleEmailSignup = async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
-        
+
         const { data, error } = await supabase.auth.signUp({
             email,
             password,
@@ -54,13 +54,13 @@ export default function SignupPage() {
                 data: {
                     full_name: email.split('@')[0], // Pass a temporary name to satisfy the NOT NULL rule
                 },
-                emailRedirectTo: `${location.origin}/auth/callback?next=/profile?onboarding=true`
-            }
+                emailRedirectTo: `${location.origin}/auth/callback?next=/profile?onboarding=true`,
+            },
         })
 
         if (error) {
             console.error(error)
-            alert("Error signing up: " + error.message)
+            alert('Error signing up: ' + error.message)
             setLoading(false)
             return
         }
@@ -78,7 +78,7 @@ export default function SignupPage() {
         const { data, error } = await supabase.auth.verifyOtp({
             email,
             token: otp,
-            type: 'signup'
+            type: 'signup',
         })
 
         if (error) {
@@ -98,8 +98,8 @@ export default function SignupPage() {
             <FloatingScreensaver
                 quantity={6}
                 speed={0.67}
-                backgroundColor="#ff5cd9" 
-                shapeColor="#a3ff47" 
+                backgroundColor="#ff5cd9"
+                shapeColor="#a3ff47"
                 className="absolute inset-0 z-0"
             />
 
@@ -108,102 +108,154 @@ export default function SignupPage() {
                 {showOTP ? (
                     <Card className="w-full max-w-md overflow-hidden rounded-[2.5rem] border-4 border-border bg-background shadow-shadow">
                         <CardHeader className="text-center pb-2">
-                            <CardTitle className="text-4xl font-extrabold uppercase tracking-tight">Verify Email</CardTitle>
+                            <CardTitle className="text-4xl font-extrabold uppercase tracking-tight">
+                                Verify Email
+                            </CardTitle>
                         </CardHeader>
                         <CardContent className="flex flex-col gap-6 p-8 pt-4 items-center">
                             <p className="text-center text-muted-foreground font-bold">
-                                We sent a code to <span className="text-foreground">{email}</span>. Enter it below to verify your account.
+                                We sent a code to{' '}
+                                <span className="text-foreground">{email}</span>
+                                . Enter it below to verify your account.
                             </p>
-                            
-                            <InputOTP maxLength={6} value={otp} onChange={(value) => setOtp(value)}>
+
+                            <InputOTP
+                                maxLength={6}
+                                value={otp}
+                                onChange={(value) => setOtp(value)}
+                            >
                                 <InputOTPGroup>
-                                    <InputOTPSlot index={0} className="h-12 w-10 border-2 border-border text-lg font-bold" />
-                                    <InputOTPSlot index={1} className="h-12 w-10 border-2 border-border text-lg font-bold" />
-                                    <InputOTPSlot index={2} className="h-12 w-10 border-2 border-border text-lg font-bold" />
+                                    <InputOTPSlot
+                                        index={0}
+                                        className="h-12 w-10 border-2 border-border text-lg font-bold"
+                                    />
+                                    <InputOTPSlot
+                                        index={1}
+                                        className="h-12 w-10 border-2 border-border text-lg font-bold"
+                                    />
+                                    <InputOTPSlot
+                                        index={2}
+                                        className="h-12 w-10 border-2 border-border text-lg font-bold"
+                                    />
                                 </InputOTPGroup>
                                 <InputOTPSeparator />
                                 <InputOTPGroup>
-                                    <InputOTPSlot index={3} className="h-12 w-10 border-2 border-border text-lg font-bold" />
-                                    <InputOTPSlot index={4} className="h-12 w-10 border-2 border-border text-lg font-bold" />
-                                    <InputOTPSlot index={5} className="h-12 w-10 border-2 border-border text-lg font-bold" />
+                                    <InputOTPSlot
+                                        index={3}
+                                        className="h-12 w-10 border-2 border-border text-lg font-bold"
+                                    />
+                                    <InputOTPSlot
+                                        index={4}
+                                        className="h-12 w-10 border-2 border-border text-lg font-bold"
+                                    />
+                                    <InputOTPSlot
+                                        index={5}
+                                        className="h-12 w-10 border-2 border-border text-lg font-bold"
+                                    />
                                 </InputOTPGroup>
                             </InputOTP>
 
-                            <Button 
-                                onClick={handleVerifyOTP} 
+                            <Button
+                                onClick={handleVerifyOTP}
                                 disabled={loading || otp.length < 6}
                                 className="w-full rounded-xl border-4 border-border bg-main text-xl font-extrabold uppercase text-foreground shadow-sm hover:-translate-y-1 hover:shadow-[4px_4px_0_0_var(--border)] transition-all active:translate-y-0 active:shadow-none"
                             >
                                 {loading ? 'Verifying...' : 'Verify Code'}
                             </Button>
-                            
-                            <button onClick={() => setShowOTP(false)} className="text-sm font-bold text-muted-foreground hover:text-foreground underline">
+
+                            <button
+                                onClick={() => setShowOTP(false)}
+                                className="text-sm font-bold text-muted-foreground hover:text-foreground underline"
+                            >
                                 Back to Sign Up
                             </button>
                         </CardContent>
                     </Card>
                 ) : (
-                <Card className="w-full max-w-md overflow-hidden rounded-[2.5rem] border-4 border-border bg-background shadow-shadow">
-                    <CardHeader className="text-center pb-2">
-                        <CardTitle className="text-4xl font-extrabold uppercase tracking-tight">Join the Club!</CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex flex-col gap-6 p-8 pt-4">
-                        {/* Google Button */}
-                        <Button
-                            type="button"
-                            onClick={handleGoogleSignup}
-                            className="w-full gap-3 rounded-xl border-4 border-border bg-white text-stone-900 shadow-sm hover:bg-gray-50 hover:-translate-y-1 hover:shadow-md transition-all h-14 text-lg font-bold"
-                        >
-                            <GoogleIcon className="h-6 w-6" />
-                            <span>Sign up with Google</span>
-                        </Button>
-
-                        <div className="relative flex items-center justify-center">
-                            <div className="absolute inset-0 flex items-center">
-                                <span className="w-full border-t-4 border-border/20"></span>
-                            </div>
-                            <span className="relative bg-background px-4 text-sm font-extrabold uppercase text-muted-foreground">Or with email</span>
-                        </div>
-
-                        <form onSubmit={handleEmailSignup} className="flex flex-col gap-4">
-                            <div className="space-y-2">
-                                <label className="text-sm font-extrabold uppercase ml-1">Email</label>
-                                <Input
-                                    type="email"
-                                    placeholder="hello@example.com"
-                                    required
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="h-14 rounded-xl border-4 border-border bg-secondary/20 px-4 text-lg font-bold placeholder:text-muted-foreground/50 focus-visible:ring-0 focus-visible:shadow-[4px_4px_0_0_var(--border)] transition-all"
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <label className="text-sm font-extrabold uppercase ml-1">Password</label>
-                                <Input
-                                    type="password"
-                                    placeholder="••••••••"
-                                    required
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="h-14 rounded-xl border-4 border-border bg-secondary/20 px-4 text-lg font-bold placeholder:text-muted-foreground/50 focus-visible:ring-0 focus-visible:shadow-[4px_4px_0_0_var(--border)] transition-all"
-                                />
-                            </div>
-
-                            <Button type="submit" className="mt-2 h-14 w-full rounded-xl border-4 border-border bg-main text-xl font-extrabold uppercase text-foreground shadow-sm hover:-translate-y-1 hover:shadow-[4px_4px_0_0_var(--border)] transition-all active:translate-y-0 active:shadow-none">
-                                {loading ? 'Creating Account...' : 'Sign Up'}
+                    <Card className="w-full max-w-md overflow-hidden rounded-[2.5rem] border-4 border-border bg-background shadow-shadow">
+                        <CardHeader className="text-center pb-2">
+                            <CardTitle className="text-4xl font-extrabold uppercase tracking-tight">
+                                Join the Club!
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="flex flex-col gap-6 p-8 pt-4">
+                            {/* Google Button */}
+                            <Button
+                                type="button"
+                                onClick={handleGoogleSignup}
+                                className="w-full gap-3 rounded-xl border-4 border-border bg-white text-stone-900 shadow-sm hover:bg-gray-50 hover:-translate-y-1 hover:shadow-md transition-all h-14 text-lg font-bold"
+                            >
+                                <GoogleIcon className="h-6 w-6" />
+                                <span>Sign up with Google</span>
                             </Button>
-                        </form>
 
-                        <div className="text-center mt-2">
-                            <p className="text-sm font-bold text-muted-foreground">
-                                Already have an account?{' '}
-                                <Link href="/auth/login" className="text-foreground underline decoration-4 underline-offset-4 hover:text-primary transition-colors">
-                                    Log In
-                                </Link>
-                            </p>
-                        </div>
-                    </CardContent>
-                </Card>
+                            <div className="relative flex items-center justify-center">
+                                <div className="absolute inset-0 flex items-center">
+                                    <span className="w-full border-t-4 border-border/20"></span>
+                                </div>
+                                <span className="relative bg-background px-4 text-sm font-extrabold uppercase text-muted-foreground">
+                                    Or with email
+                                </span>
+                            </div>
+
+                            <form
+                                onSubmit={handleEmailSignup}
+                                className="flex flex-col gap-4"
+                            >
+                                <div className="space-y-2">
+                                    <label className="text-sm font-extrabold uppercase ml-1">
+                                        Email
+                                    </label>
+                                    <Input
+                                        type="email"
+                                        placeholder="hello@example.com"
+                                        required
+                                        value={email}
+                                        onChange={(e) =>
+                                            setEmail(e.target.value)
+                                        }
+                                        className="h-14 rounded-xl border-4 border-border bg-secondary/20 px-4 text-lg font-bold placeholder:text-muted-foreground/50 focus-visible:ring-0 focus-visible:shadow-[4px_4px_0_0_var(--border)] transition-all"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-extrabold uppercase ml-1">
+                                        Password
+                                    </label>
+                                    <Input
+                                        type="password"
+                                        placeholder="••••••••"
+                                        required
+                                        value={password}
+                                        onChange={(e) =>
+                                            setPassword(e.target.value)
+                                        }
+                                        className="h-14 rounded-xl border-4 border-border bg-secondary/20 px-4 text-lg font-bold placeholder:text-muted-foreground/50 focus-visible:ring-0 focus-visible:shadow-[4px_4px_0_0_var(--border)] transition-all"
+                                    />
+                                </div>
+
+                                <Button
+                                    type="submit"
+                                    className="mt-2 h-14 w-full rounded-xl border-4 border-border bg-main text-xl font-extrabold uppercase text-foreground shadow-sm hover:-translate-y-1 hover:shadow-[4px_4px_0_0_var(--border)] transition-all active:translate-y-0 active:shadow-none"
+                                >
+                                    {loading
+                                        ? 'Creating Account...'
+                                        : 'Sign Up'}
+                                </Button>
+                            </form>
+
+                            <div className="text-center mt-2">
+                                <p className="text-sm font-bold text-muted-foreground">
+                                    Already have an account?{' '}
+                                    <Link
+                                        href="/auth/login"
+                                        className="text-foreground underline decoration-4 underline-offset-4 hover:text-primary transition-colors"
+                                    >
+                                        Log In
+                                    </Link>
+                                </p>
+                            </div>
+                        </CardContent>
+                    </Card>
                 )}
             </div>
         </main>

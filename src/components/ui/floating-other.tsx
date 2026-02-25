@@ -34,7 +34,7 @@ export default function FloatingScreensaver({
     children,
 }: FloatingScreensaverProps) {
     const containerRef = useRef<HTMLDivElement>(null)
-    const requestRef = useRef<number>()
+    const requestRef = useRef<number | null>(null)
     const [entities, setEntities] = useState<ShapeEntity[]>([])
     const entitiesRef = useRef<ShapeEntity[]>([])
 

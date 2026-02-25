@@ -173,7 +173,7 @@ function AlertDialogAction({
 
 function AlertDialogCancel({
     className,
-    variant = 'outline',
+    variant = 'noShadow',
     size = 'default',
     ...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Cancel> &

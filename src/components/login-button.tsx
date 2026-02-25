@@ -20,7 +20,7 @@ export default function GoogleLoginButton() {
     }
 
     return (
-        <Button onClick={handleLogin} variant="outline" className="w-full">
+        <Button onClick={handleLogin} className="w-full">
             {/* If you have a Google Icon SVG */}
             <svg
                 className="mr-2 h-4 w-4"

@@ -41,13 +41,15 @@ export default async function Homepage() {
     // 3. Fetch Profile Data + Hangout Hobbies (for the "Likes" section)
     const { data: profile, error } = await supabase
         .from('profiles')
-        .select(`
+        .select(
+            `
             full_name,
             avatar_url,
             role,
             bio,
             likes
-        `)
+        `
+        )
         .eq('id', user.id)
         .single()
 
@@ -70,9 +72,7 @@ export default async function Homepage() {
     return (
         // Locks to the 100vh constraint set by layout.tsx
         <div className="h-full w-full">
-            
             <main className="mx-auto flex h-full w-full flex-col gap-6 px-6 md:flex-row md:px-8">
-                
                 {/* --- LEFT COLUMN: PROFILE CARD --- */}
                 {/* Set strictly to h-full so it fills the vertical space */}
                 <Card className="hidden h-full w-full shrink-0 flex-col overflow-hidden rounded-[2rem] border-4 border-border bg-primary shadow-shadow md:flex md:w-[320px] lg:w-[350px]">
@@ -94,13 +94,15 @@ export default async function Homepage() {
                             {formattedRole} Enthusiast
                         </div>
                     </CardHeader>
-                    
+
                     <CardContent className="flex min-h-0 flex-1 flex-col gap-3 p-5 text-left text-foreground">
                         <hr className="w-full border-2 border-border" />
 
                         {/* Likes Section pushes down with mt-auto if there's extra space */}
                         <div className="mb-auto mt-2 w-full shrink-0 text-left">
-                            <p className="text-sm font-bold text-foreground lg:text-base">Likes:</p>
+                            <p className="text-sm font-bold text-foreground lg:text-base">
+                                Likes:
+                            </p>
                             <p className="line-clamp-4 text-xs font-medium leading-relaxed text-foreground/80 lg:text-sm">
                                 {likesText}
                             </p>
@@ -110,10 +112,8 @@ export default async function Homepage() {
 
                 {/* --- RIGHT COLUMN: ACTIONS --- */}
                 <div className="flex h-full w-full flex-1 flex-col gap-6">
-                    
                     {/* Internal scroll wrapper: Ensures mobile users can scroll the buttons if they stack */}
                     <div className="flex flex-1 min-h-0 flex-col gap-6 pr-2 lg:gap-8">
-                        
                         {/* The Prompt Box - shrink-0 ensures it keeps its height */}
                         <div className="flex w-full shrink-0 min-h-[140px] md:min-h-[180px] items-center justify-center rounded-4xl border-4 border-border bg-primary p-8 text-center shadow-shadow lg:min-h-[200px]">
                             <h1 className="text-3xl font-extrabold text-foreground md:text-5xl lg:text-6xl">
@@ -123,7 +123,6 @@ export default async function Homepage() {
 
                         {/* The Three Action Buttons Grid */}
                         <div className="grid w-full flex-1 grid-cols-1 gap-6 sm:grid-cols-3 lg:gap-8">
-                            
                             {/* Hangout Link - Removed 'aspect-square', added 'min-h-[160px]' to let it stretch! */}
                             <Link
                                 href="/pools/hangout"
@@ -143,7 +142,7 @@ export default async function Homepage() {
 
                             {/* Date Link */}
                             <Link
-                                href="/dating/intro" 
+                                href="/dating/intro"
                                 className="group relative flex h-full w-full min-h-[160px] items-center justify-center overflow-hidden rounded-4xl border-4 border-border bg-foreground shadow-shadow transition-all duration-300 hover:-translate-y-2 hover:rotate-2 hover:shadow-[8px_8px_0px_0px_var(--border)] active:translate-y-0 active:rotate-0 active:shadow-none"
                             >
                                 <Image
@@ -171,14 +170,15 @@ export default async function Homepage() {
                                 />
                                 <div className="absolute inset-0 bg-foreground/20 transition-colors group-hover:bg-transparent" />
                                 <span className="relative z-10 text-center text-4xl font-extrabold leading-tight tracking-wide text-background drop-shadow-[3px_3px_0_var(--tw-shadow-color)] shadow-border">
-                                    Study<br/>Buddy
+                                    Study
+                                    <br />
+                                    Buddy
                                 </span>
                             </Link>
                         </div>
                     </div>
                 </div>
             </main>
-
         </div>
     )
 }
