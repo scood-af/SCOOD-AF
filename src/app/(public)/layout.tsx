@@ -1,10 +1,9 @@
 import StaggeredMenu from '@/components/StaggeredMenu'
 
 const menuItems = [
-    { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
-    { label: 'About', ariaLabel: 'Learn about us', link: '/about' },
-    { label: 'Services', ariaLabel: 'View our services', link: '/services' },
-    { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' },
+    { label: 'Home', ariaLabel: 'Go to home page', link: '/home' },
+    { label: 'Profile', ariaLabel: 'View Profile', link: '/profile' },
+    { label: 'Dating Pool', ariaLabel: 'View Dating Pool', link: '/dating/pool' },
 ]
 
 const socialItems = [
@@ -25,7 +24,7 @@ export default function PublicLayout({
                 isFixed={true}
                 items={menuItems}
                 socialItems={socialItems}
-                displaySocials
+                displaySocials={false}
                 displayItemNumbering={true}
                 menuButtonColor="var(--main-foreground)"
                 openMenuButtonColor="var(--foreground)"
