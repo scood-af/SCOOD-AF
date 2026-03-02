@@ -46,6 +46,7 @@ export default async function Homepage() {
             full_name,
             avatar_url,
             role,
+            institution,
             bio,
             likes
         `
@@ -66,18 +67,17 @@ export default async function Homepage() {
     const likesText = profile.likes || 'Update your profile to add likes/hobby!'
 
     // Format Role (capitalize first letter)
-    const formattedRole =
-        profile.role.charAt(0).toUpperCase() + profile.role.slice(1)
+    const formattedRole = profile.role 
+        ? profile.role.charAt(0).toUpperCase() + profile.role.slice(1)
+        : 'Student'
 
     return (
         // Locks to the 100vh constraint set by layout.tsx
         <div className="h-full w-full">
             <main className="mx-auto flex h-full w-full flex-col gap-6 px-6 md:flex-row md:px-8">
                 {/* --- LEFT COLUMN: PROFILE CARD --- */}
-                {/* Set strictly to h-full so it fills the vertical space */}
-                <Card className="hidden h-full w-full shrink-0 flex-col overflow-hidden rounded-[2rem] border-4 border-border bg-primary shadow-shadow md:flex md:w-[320px] lg:w-[350px]">
+                <Card className="hidden h-full w-full shrink-0 flex-col overflow-hidden rounded-[2rem] border-4 border-border bg-primary shadow-shadow md:flex md:w-[320px] lg:w-87.5">
                     <CardHeader className="flex flex-col items-center p-5 pb-0 text-center md:items-start md:text-left">
-                        {/* Shrunk the avatar so the card doesn't overflow on short screens */}
                         <div className="relative mb-3 aspect-square w-32 shrink-0 overflow-hidden rounded-2xl border-4 border-border bg-background lg:w-40 xl:w-48">
                             <Image
                                 src={profile.avatar_url || '/placeholder.svg'}
@@ -87,24 +87,43 @@ export default async function Homepage() {
                                 priority
                             />
                         </div>
+
                         <h2 className="line-clamp-1 text-2xl font-extrabold tracking-tight text-foreground lg:text-3xl">
                             {profile.full_name || 'Anon User'}
                         </h2>
                         <div className="text-sm font-medium tracking-tight text-foreground/80 lg:text-base">
-                            {formattedRole} Enthusiast
+                            {formattedRole},{' '}
+                            {profile.institution || 'Universitas Udayana'}
                         </div>
                     </CardHeader>
 
                     <CardContent className="flex min-h-0 flex-1 flex-col gap-3 p-5 text-left text-foreground">
                         <hr className="w-full border-2 border-border" />
 
-                        {/* Likes Section pushes down with mt-auto if there's extra space */}
-                        <div className="mb-auto mt-2 w-full shrink-0 text-left">
+                        {/* Bio Section */}
+                        <div className="w-full shrink-0 rounded-xl border-4 border-border bg-background p-3 shadow-[4px_4px_0_0_var(--tw-shadow-color)] shadow-border lg:p-4">
+                            <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-foreground/60 lg:text-xs">
+                                Bio
+                            </p>
+                            <p className="line-clamp-2 text-sm font-bold leading-snug text-foreground lg:text-base">
+                                {profile.bio || 'Cardiology Enthusiast'}
+                            </p>
+                        </div>
+
+                        {/* Likes Section */}
+                        <div className="mt-1 w-full shrink-0 text-left">
                             <p className="text-sm font-bold text-foreground lg:text-base">
                                 Likes:
                             </p>
-                            <p className="line-clamp-4 text-xs font-medium leading-relaxed text-foreground/80 lg:text-sm">
+                            <p className="line-clamp-2 text-xs font-medium leading-relaxed text-foreground/80 lg:text-sm">
                                 {likesText}
+                            </p>
+                        </div>
+
+                        {/* Mind Your Manner Box */}
+                        <div className="mt-auto shrink-0 rounded-xl border-4 border-border bg-foreground p-3 text-center lg:p-4">
+                            <p className="text-sm font-extrabold leading-tight text-background lg:text-base">
+                                Please do Mind Your Manner yh :D
                             </p>
                         </div>
                     </CardContent>
@@ -123,22 +142,22 @@ export default async function Homepage() {
 
                         {/* The Three Action Buttons Grid */}
                         <div className="grid w-full flex-1 grid-cols-1 gap-6 sm:grid-cols-3 lg:gap-8">
-                            {/* Hangout Link - Removed 'aspect-square', added 'min-h-[160px]' to let it stretch! */}
-                            <Link
-                                href="/pools/hangout"
-                                className="group relative flex h-full w-full min-h-[160px] items-center justify-center overflow-hidden rounded-4xl border-4 border-border bg-foreground shadow-shadow transition-all duration-300 hover:-translate-y-2 hover:rotate-2 hover:shadow-[8px_8px_0px_0px_var(--border)] active:translate-y-0 active:rotate-0 active:shadow-none"
-                            >
+                            {/* Hangout Link */}
+                            <div className="relative flex h-full w-full min-h-[160px] cursor-not-allowed items-center justify-center overflow-hidden rounded-4xl border-4 border-border bg-foreground opacity-80 shadow-shadow grayscale">
                                 <Image
-                                    src="/placeholder.svg"
+                                    src="/picture/hangout.jpg"
                                     alt="Hangout"
                                     fill
-                                    className="object-cover opacity-80 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100"
+                                    className="object-cover opacity-50"
                                 />
-                                <div className="absolute inset-0 bg-foreground/20 transition-colors group-hover:bg-transparent" />
+                                <div className="absolute inset-0 bg-foreground/20" />
                                 <span className="relative z-10 text-4xl font-extrabold tracking-wide text-background drop-shadow-[3px_3px_0_var(--tw-shadow-color)] shadow-border">
                                     Hangout
                                 </span>
-                            </Link>
+                                <div className="absolute -right-12 top-8 z-20 w-48 rotate-45 bg-[#FF47D6] py-3 text-center text-xs font-extrabold uppercase tracking-widest text-foreground shadow-sm cursor-not-allowed select-none transition-transform hover:scale-110">
+                                    Coming Soon
+                                </div>
+                            </div>
 
                             {/* Date Link */}
                             <Link
@@ -146,7 +165,7 @@ export default async function Homepage() {
                                 className="group relative flex h-full w-full min-h-[160px] items-center justify-center overflow-hidden rounded-4xl border-4 border-border bg-foreground shadow-shadow transition-all duration-300 hover:-translate-y-2 hover:rotate-2 hover:shadow-[8px_8px_0px_0px_var(--border)] active:translate-y-0 active:rotate-0 active:shadow-none"
                             >
                                 <Image
-                                    src="/placeholder.svg"
+                                    src="/picture/dating.jpg"
                                     alt="Date"
                                     fill
                                     className="object-cover opacity-80 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100"
@@ -158,23 +177,23 @@ export default async function Homepage() {
                             </Link>
 
                             {/* Study Buddy Link */}
-                            <Link
-                                href="/pools/study"
-                                className="group relative flex h-full w-full min-h-[160px] items-center justify-center overflow-hidden rounded-4xl border-4 border-border bg-foreground shadow-shadow transition-all duration-300 hover:-translate-y-2 hover:rotate-2 hover:shadow-[8px_8px_0px_0px_var(--border)] active:translate-y-0 active:rotate-0 active:shadow-none"
-                            >
+                            <div className="relative flex h-full w-full min-h-[160px] cursor-not-allowed items-center justify-center overflow-hidden rounded-4xl border-4 border-border bg-foreground opacity-80 shadow-shadow grayscale">
                                 <Image
-                                    src="/placeholder.svg"
+                                    src="/picture/study.jpg"
                                     alt="Study Buddy"
                                     fill
-                                    className="object-cover opacity-80 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100"
+                                    className="object-cover opacity-50"
                                 />
-                                <div className="absolute inset-0 bg-foreground/20 transition-colors group-hover:bg-transparent" />
+                                <div className="absolute inset-0 bg-foreground/20" />
                                 <span className="relative z-10 text-center text-4xl font-extrabold leading-tight tracking-wide text-background drop-shadow-[3px_3px_0_var(--tw-shadow-color)] shadow-border">
                                     Study
                                     <br />
                                     Buddy
                                 </span>
-                            </Link>
+                                <div className="absolute -right-12 top-8 z-20 w-48 rotate-45 bg-[#FF47D6] py-3 text-center text-xs font-extrabold uppercase tracking-widest text-foreground shadow-sm cursor-not-allowed select-none transition-transform hover:scale-110">
+                                    Coming Soon
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
