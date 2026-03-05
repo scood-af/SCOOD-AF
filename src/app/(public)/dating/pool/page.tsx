@@ -149,9 +149,9 @@ export default async function DatingPoolPage() {
                             >
                                 Home
                             </Link>
-                            <button className="flex flex-1 items-center justify-center rounded-lg border-4 border-border bg-foreground px-4 py-2 text-sm font-extrabold uppercase tracking-wide text-background shadow-border transition-transform hover:-translate-y-1 hover:shadow-[4px_4px_0_0_var(--tw-shadow-color)] active:translate-y-0 active:shadow-none sm:flex-none md:rounded-xl md:px-6 md:py-3 md:text-base">
+                            {/* <button className="flex flex-1 items-center justify-center rounded-lg border-4 border-border bg-foreground px-4 py-2 text-sm font-extrabold uppercase tracking-wide text-background shadow-border transition-transform hover:-translate-y-1 hover:shadow-[4px_4px_0_0_var(--tw-shadow-color)] active:translate-y-0 active:shadow-none sm:flex-none md:rounded-xl md:px-6 md:py-3 md:text-base">
                                 Shuffle
-                            </button>
+                            </button> */}
                         </div>
                     </div>
 
@@ -169,7 +169,7 @@ export default async function DatingPoolPage() {
                                 {poolUsers.map((person) => (
                                     <PoolCard
                                         key={person.id}
-                                        person={person}
+                                        person={person.full_name}
                                         currentUserId={user.id}
                                     />
                                 ))}
