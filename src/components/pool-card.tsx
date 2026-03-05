@@ -18,7 +18,7 @@ type Person = {
         love_language: string
         relationship_goals: string
         preference: string
-    }[]
+    }
 }
 
 export default function PoolCard({ person, currentUserId }: { person: Person, currentUserId: string }) {
@@ -27,8 +27,7 @@ export default function PoolCard({ person, currentUserId }: { person: Person, cu
     const router = useRouter()
     const supabase = createClient()
     
-    // Fallback in case dating_profiles array is empty
-    const dating = person.dating_profiles?.[0]
+    const dating = person.dating_profiles
 
     const handleStartChat = async () => {
         setIsLoading(true)
@@ -135,17 +134,17 @@ export default function PoolCard({ person, currentUserId }: { person: Person, cu
                     <div className="flex flex-wrap gap-2">
                         {/* Gender is now pulled directly from person */}
                         {person.gender && (
-                            <span className="rounded-md border-2 border-border bg-background px-2 py-1 text-[10px] font-extrabold uppercase text-foreground shadow-[2px_2px_0_0_var(--tw-shadow-color)] shadow-border lg:text-[11px]">
+                            <span className="rounded-full border-2 border-border bg-background px-2 py-1 text-[10px] font-extrabold uppercase text-foreground shadow-[2px_2px_0_0_var(--tw-shadow-color)] shadow-border lg:text-[11px]">
                                 {person.gender}
                             </span>
                         )}
                         {dating?.relationship_goals && (
-                            <span className="rounded-md border-2 border-border bg-main px-2 py-1 text-[10px] font-extrabold uppercase text-secondary-background shadow-[2px_2px_0_0_var(--tw-shadow-color)] shadow-border lg:text-[11px]">
+                            <span className="rounded-full border-2 border-border bg-main px-2 py-1 text-[10px] font-extrabold uppercase text-secondary-background shadow-[2px_2px_0_0_var(--tw-shadow-color)] shadow-border lg:text-[11px]">
                                 {dating.relationship_goals}
                             </span>
                         )}
                         {dating?.love_language && (
-                            <span className="rounded-md border-2 border-border bg-main/30 px-2 py-1 text-[10px] font-extrabold uppercase text-foreground shadow-[2px_2px_0_0_var(--tw-shadow-color)] shadow-border lg:text-[11px]">
+                            <span className="rounded-full border-2 border-border bg-main/30 px-2 py-1 text-[10px] font-extrabold uppercase text-foreground shadow-[2px_2px_0_0_var(--tw-shadow-color)] shadow-border lg:text-[11px]">
                                 {dating.love_language}
                             </span>
                         )}
