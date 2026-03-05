@@ -83,6 +83,7 @@ export default async function DatingPoolPage() {
     if (error) {
         console.error("Error fetching pool:", error)
     }
+    // console.log(poolUsers)
 
     return (
         <div className="h-full w-full">
@@ -166,10 +167,15 @@ export default async function DatingPoolPage() {
                         {/* The Pool Grid sits right below the Chat Section */}
                         {poolUsers && poolUsers.length > 0 ? (
                             <div className="grid grid-cols-1 gap-4 md:gap-6 xl:grid-cols-2 pb-4">
-                                {poolUsers.map((person) => (
+                                {poolUsers.map((person: any) => (
                                     <PoolCard
                                         key={person.id}
-                                        person={person.full_name}
+                                        person={{
+                                            ...person,
+                                            dating_profiles: Array.isArray(person.dating_profiles) 
+                                                ? person.dating_profiles[0] 
+                                                : person.dating_profiles
+                                        }}
                                         currentUserId={user.id}
                                     />
                                 ))}

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/client'
 import { SVGProps } from 'react'
 import FloatingScreensaver from '@/components/ui/floating-other'
@@ -19,22 +20,37 @@ const GoogleIcon = (props: SVGProps<SVGSVGElement>) => (
 
 export default function LoginPage() {
     const supabase = createClient()
+    const router = useRouter()
     const [loading, setLoading] = useState(false)
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
     const handleGoogleLogin = async () => {
         setLoading(true)
         await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: `${location.origin}/auth/callback`,
+                redirectTo: `${location.origin}/auth/callback?next=/home`,
             },
         })
     }
 
-    const handleEmailLogin = (e: React.FormEvent) => {
+    const handleEmailLogin = async (e: React.FormEvent) => {
         e.preventDefault()
-        // Add your email login logic here
-        console.log('Email login triggered')
+        setLoading(true)
+
+        const { error } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+        })
+
+        if (error) {
+            alert(error.message)
+            setLoading(false)
+        } else {
+            router.push('/home')
+            router.refresh()
+        }
     }
 
     return (
@@ -88,6 +104,8 @@ export default function LoginPage() {
                                     type="email"
                                     placeholder="hello@example.com"
                                     required
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     className="h-14 rounded-xl border-4 border-border bg-secondary/20 px-4 text-lg font-bold placeholder:text-muted-foreground/50 focus-visible:ring-0 focus-visible:shadow-[4px_4px_0_0_var(--border)] transition-all"
                                 />
                             </div>
@@ -99,6 +117,8 @@ export default function LoginPage() {
                                     type="password"
                                     placeholder="••••••••"
                                     required
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     className="h-14 rounded-xl border-4 border-border bg-secondary/20 px-4 text-lg font-bold placeholder:text-muted-foreground/50 focus-visible:ring-0 focus-visible:shadow-[4px_4px_0_0_var(--border)] transition-all"
                                 />
                             </div>
