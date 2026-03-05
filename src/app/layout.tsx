@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Pixelify_Sans } from 'next/font/google'
 import ClickSpark from '@/components/ClickSpark'
-// import StaggeredMenu from '@/components/StaggeredMenu';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css'
 
 // const menuItems = [
@@ -71,6 +71,7 @@ export default function RootLayout({
                         accentColor="var(--main)"
                     /> */}
                     <div className="min-h-screen">{children}</div>
+                    <Analytics />
                 </ClickSpark>
             </body>
         </html>
