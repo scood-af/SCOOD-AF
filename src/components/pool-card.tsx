@@ -101,6 +101,8 @@ export default function PoolCard({ person, currentUserId }: { person: Person, cu
     const displayRole = person.role || 'Student'
     const displayInstitution = person.institution || 'Universitas Udayana'
 
+    // console.log(person)
+
     return (
         <>
             {/* THE CARD (Triggers the Modal) */}
