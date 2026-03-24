@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/client'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Camera, Save, Loader2, ArrowLeft, Eye, EyeOff } from 'lucide-react'
+import imageCompression from 'browser-image-compression'
 
 function ProfileContent() {
     const router = useRouter()
@@ -88,25 +89,47 @@ function ProfileContent() {
         let finalAvatarUrl = avatarUrl
 
         // 1. Upload new avatar if selected
+        // 1. Upload new avatar if selected
         if (avatarFile) {
-            const fileExt = avatarFile.name.split('.').pop()
-            const filePath = `${userId}/avatar-${Date.now()}.${fileExt}`
+            try {
+                // Compress the image and FORCE it to be a JPEG so the extension never changes
+                const options = {
+                    maxSizeMB: 0.5, 
+                    maxWidthOrHeight: 800, 
+                    useWebWorker: true,
+                    fileType: 'image/jpeg' // <-- Force jpeg format
+                }
+                const compressedFile = await imageCompression(avatarFile, options)
 
-            const { error: uploadError } = await supabase.storage
-                .from('avatars')
-                .upload(filePath, avatarFile, { upsert: true })
+                // ALWAYS use the exact same filename. This guarantees `{ upsert: true }` overwrites it.
+                const filePath = `${userId}/avatar.jpg`
 
-            if (uploadError) {
-                console.error('Storage Upload Error:', uploadError)
+                const { error: uploadError } = await supabase.storage
+                    .from('avatars')
+                    .upload(filePath, compressedFile, { upsert: true, cacheControl: '0' })
+
+                if (uploadError) {
+                    console.error('Storage Upload Error:', uploadError)
+                    setIsSaving(false)
+                    alert('Failed to upload image. Check console.')
+                    return
+                }
+
+                const {
+                    data: { publicUrl },
+                } = supabase.storage.from('avatars').getPublicUrl(filePath)
+                
+                // 🚀 CACHE BUSTER: Append a timestamp to the URL saved in the database.
+                // This forces the browser/Next.js to fetch the fresh image instead of the cached one,
+                // without creating redundant files in your storage bucket!
+                finalAvatarUrl = `${publicUrl}?v=${Date.now()}`
+                
+            } catch (error) {
+                console.error('Error compressing image:', error)
                 setIsSaving(false)
-                alert('Failed to upload image. Check console.')
+                alert('Failed to process image. Please try another one.')
                 return
             }
-
-            const {
-                data: { publicUrl },
-            } = supabase.storage.from('avatars').getPublicUrl(filePath)
-            finalAvatarUrl = publicUrl
         }
 
         // 2. Update the existing profile data

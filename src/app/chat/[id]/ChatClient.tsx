@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/client'
 import { ArrowLeft, Image as ImageIcon, Send, X } from 'lucide-react'
 import { RetroScrollArea } from '@/components/ui/retro-scroll'
+import GhostModeBanner from '@/components/ghost-mode-banner'
 
 type Message = {
     id: string
@@ -39,6 +40,7 @@ export default function ChatClient({
     const [input, setInput] = useState('')
     const [imageFile, setImageFile] = useState<File | null>(null)
     const [isUploading, setIsUploading] = useState(false)
+    const [showGhostBanner, setShowGhostBanner] = useState(false)
 
     const router = useRouter()
     const supabase = createClient()
@@ -51,6 +53,32 @@ export default function ChatClient({
         if (scrollContainer)
             scrollContainer.scrollTop = scrollContainer.scrollHeight
     }, [messages, imageFile])
+
+    // Check banner visibility (reappears every 15 minutes)
+    useEffect(() => {
+    // 1. Clear the "dismissed" state so it shows up fresh on page load/mount
+    sessionStorage.removeItem(`ghost-banner-dismissed-${chatId}`);
+
+    const checkBanner = () => {
+        const lastDismissedStr = sessionStorage.getItem(`ghost-banner-dismissed-${chatId}`);
+        
+        if (!lastDismissedStr) {
+            setShowGhostBanner(true);
+            return;
+        }
+
+        const lastDismissed = parseInt(lastDismissedStr, 10);
+        if (Date.now() - lastDismissed > 15 * 60 * 1000) {
+            setShowGhostBanner(true);
+        }
+    };
+
+    // 2. Run the check immediately
+    checkBanner();
+
+    const interval = setInterval(checkBanner, 60 * 1000);
+    return () => clearInterval(interval);
+}, [chatId]);
 
     // SUPABASE REALTIME HOOK
     useEffect(() => {
@@ -85,6 +113,11 @@ export default function ChatClient({
         if (e.target.files && e.target.files.length > 0) {
             setImageFile(e.target.files[0])
         }
+    }
+
+    const handleDismissBanner = () => {
+        setShowGhostBanner(false)
+        sessionStorage.setItem(`ghost-banner-dismissed-${chatId}`, Date.now().toString())
     }
 
     const sendMessage = async (e?: React.FormEvent) => {
@@ -166,7 +199,7 @@ export default function ChatClient({
     return (
         <div className="flex h-[100dvh] w-full flex-col bg-background px-2 pt-2 pb-0 font-sans md:p-8">
             {/* TOP HEADER */}
-            <header className="relative z-10 flex shrink-0 items-center justify-between rounded-full border-4 border-border bg-[#FF47D6] p-2 pr-6 shadow-[4px_4px_0_0_var(--tw-shadow-color)] shadow-border">
+            <header className="relative z-10 flex shrink-0 items-center justify-between rounded-full border-4 border-border bg-main p-2 pr-6 shadow-[4px_4px_0_0_var(--tw-shadow-color)] shadow-border">
                 <div className="flex items-center gap-4">
                     <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border-4 border-border bg-background">
                         <Image
@@ -188,6 +221,16 @@ export default function ChatClient({
                     <ArrowLeft strokeWidth={4} />
                 </button>
             </header>
+
+            {/* 2. CONDITIONALLY RENDER THE BANNER WRAPPER */}
+            {showGhostBanner && (
+                <div className="mt-4 overflow-hidden z-10 rounded-2xl border-4 shadow-[4px_4px_0_0_var(--tw-shadow-color)] shadow-border">
+                    <GhostModeBanner 
+                        startedAt={messages.length > 0 ? messages[0].created_at : undefined} 
+                        onDismiss={handleDismissBanner}
+                    />
+                </div>
+            )}
 
             {/* CHAT AREA */}
             <main className="flex-1 min-h-0 -mt-12 -mb-24 z-0">
