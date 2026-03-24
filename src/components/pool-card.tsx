@@ -123,7 +123,7 @@ export default function PoolCard({ person, currentUserId }: { person: Person, cu
                 {/* Info Right */}
                 <div className="flex flex-1 flex-col justify-center gap-3 p-4 md:p-5">
                     <div>
-                        <h3 className="line-clamp-1 text-xl font-extrabold leading-none tracking-tight text-foreground lg:text-2xl">
+                        <h3 className="line-clamp-1 text-xl font-extrabold tracking-tight text-foreground lg:text-2xl">
                             {person.full_name}
                         </h3>
                         <p className="mt-1 text-xs font-extrabold uppercase text-foreground/70 lg:text-sm">
