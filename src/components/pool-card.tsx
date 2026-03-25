@@ -14,29 +14,48 @@ type Person = {
     institution?: string
     gender?: string
     bio?: string
-    dating_profiles: {
-        love_language: string
-        relationship_goals: string
-        preference: string
+    dating_profiles?: {
+        love_language?: string
+        relationship_goals?: string
+        preference?: string
+    }
+    hangout_profiles?: {
+        domicile?: string
+        topics?: string
+        offline_open?: boolean
+    }
+    study_profiles?: {
+        study_style?: string
+        study_topic?: string
     }
 }
 
-export default function PoolCard({ person, currentUserId }: { person: Person, currentUserId: string }) {
+export default function PoolCard({ 
+    person, 
+    currentUserId, 
+    poolType = 'dating' // Default to dating if not specified
+}: { 
+    person: Person, 
+    currentUserId: string,
+    poolType?: string 
+}) {
     const [isOpen, setIsOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
     const supabase = createClient()
     
     const dating = person.dating_profiles
+    const hangout = person.hangout_profiles
+    const study = person.study_profiles
 
     const handleStartChat = async () => {
         setIsLoading(true)
         
         // 1. Check if a request already exists between you and this person
         const { data: existingRequests, error: fetchError } = await supabase
-            .from('match_requests')
-            .select('id, sender_id, receiver_id')
-            .eq('pool_type', 'dating')
+                .from('match_requests')
+                .select('id, sender_id, receiver_id')
+                .eq('pool_type', poolType) // <--- UPDATED
             
         // Find if any request involves both users
         const existingRequest = existingRequests?.find(
@@ -52,7 +71,7 @@ export default function PoolCard({ person, currentUserId }: { person: Person, cu
                 .insert({
                     sender_id: currentUserId,
                     receiver_id: person.id,
-                    pool_type: 'dating',
+                    pool_type: poolType, // <--- UPDATED
                     status: 'accepted'
                 })
                 .select()
@@ -108,7 +127,7 @@ export default function PoolCard({ person, currentUserId }: { person: Person, cu
             {/* THE CARD (Triggers the Modal) */}
             <div 
                 onClick={() => setIsOpen(true)}
-                className="group flex cursor-pointer overflow-hidden rounded-[2rem] border-4 border-border bg-primary shadow-shadow transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-[4px_4px_0px_0px_var(--tw-shadow-color)] active:translate-x-[8px] active:translate-y-[8px] active:shadow-none"
+                className="group flex h-full cursor-pointer overflow-hidden rounded-[2rem] border-4 border-border bg-primary shadow-shadow transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-[4px_4px_0px_0px_var(--tw-shadow-color)] active:translate-x-[8px] active:translate-y-[8px] active:shadow-none"
             >
                 {/* Avatar Left */}
                 <div className="relative w-2/5 shrink-0 border-r-4 border-border bg-background md:w-1/3">
@@ -148,6 +167,31 @@ export default function PoolCard({ person, currentUserId }: { person: Person, cu
                         {dating?.love_language && (
                             <span className="rounded-full border-2 border-border bg-main/30 px-2 py-1 text-[10px] font-extrabold uppercase text-foreground shadow-[2px_2px_0_0_var(--tw-shadow-color)] shadow-border lg:text-[11px]">
                                 {dating.love_language}
+                            </span>
+                        )}
+                        {hangout?.domicile && (
+                            <span className="rounded-full border-2 border-border bg-main px-2 py-1 text-[10px] font-extrabold uppercase text-secondary-background shadow-[2px_2px_0_0_var(--tw-shadow-color)] shadow-border lg:text-[11px]">
+                                📍 {hangout.domicile}
+                            </span>
+                        )}
+                        {hangout?.topics && (
+                            <span className="rounded-full border-2 border-border bg-main/30 px-2 py-1 text-[10px] font-extrabold uppercase text-foreground shadow-[2px_2px_0_0_var(--tw-shadow-color)] shadow-border lg:text-[11px]">
+                                💬 {hangout.topics}
+                            </span>
+                        )}
+                        {hangout?.offline_open !== undefined && (
+                            <span className="rounded-full border-2 border-border bg-background px-2 py-1 text-[10px] font-extrabold uppercase text-foreground shadow-[2px_2px_0_0_var(--tw-shadow-color)] shadow-border lg:text-[11px]">
+                                {hangout.offline_open ? 'Meet Offline' : 'Online Only'}
+                            </span>
+                        )}
+                        {study?.study_style && (
+                            <span className="rounded-full border-2 border-border bg-main px-2 py-1 text-[10px] font-extrabold uppercase text-secondary-background shadow-[2px_2px_0_0_var(--tw-shadow-color)] shadow-border lg:text-[11px]">
+                                📚 {study.study_style}
+                            </span>
+                        )}
+                        {study?.study_topic && (
+                            <span className="rounded-full border-2 border-border bg-main/30 px-2 py-1 text-[10px] font-extrabold uppercase text-foreground shadow-[2px_2px_0_0_var(--tw-shadow-color)] shadow-border lg:text-[11px]">
+                                🎯 {study.study_topic}
                             </span>
                         )}
                     </div>

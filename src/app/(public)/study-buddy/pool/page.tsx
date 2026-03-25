@@ -2,16 +2,9 @@ import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import ChatList from '@/components/chat-list'
-import DatingPoolClient from './client'
+import StudyPoolClient from './client'
 
-// Removed gender from here since it now lives on the main profile
-type DatingProfileType = {
-    love_language?: string;
-    preference?: string;
-    relationship_goals?: string;
-};
-
-export default async function DatingPoolPage() {
+export default async function StudyPoolPage() {
     const cookieStore = await cookies()
     const supabase = createServerClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -34,43 +27,36 @@ export default async function DatingPoolPage() {
         .from('profiles')
         .select(`
             full_name, avatar_url, role, bio, institution, likes, gender,
-            dating_profiles!inner(
-                love_language, 
-                preference,
-                relationship_goals
+            study_profiles!inner(
+                study_style, 
+                study_topic
             )
         `)
         .eq('id', user.id)
         .single()
 
-    const myDating = myProfile?.dating_profiles as unknown as DatingProfileType | null | undefined;
-    const myGender = myProfile?.gender; 
-    const myPreference = myDating?.preference;
+    const myStudy = Array.isArray(myProfile?.study_profiles) 
+        ? myProfile.study_profiles[0] 
+        : myProfile?.study_profiles
 
     // 2. Build The Pool Query dynamically
     let poolQuery = supabase
         .from('profiles')
         .select(`
-            id, full_name, avatar_url, role, gender, institution,
-            dating_profiles!inner (
-                love_language, relationship_goals, preference
+            id, full_name, avatar_url, role, gender, institution, bio,
+            study_profiles!inner (
+                study_style, study_topic
             ),
             pool_memberships!inner (
                 pool_type
             )
         `)
-        .eq('pool_memberships.pool_type', 'dating')
+        .eq('pool_memberships.pool_type', 'study')
         .neq('id', user.id)
 
-    if (myPreference && myPreference !== 'Everyone' && myPreference !== 'Any') {
-        poolQuery = poolQuery.eq('gender', myPreference);
-    }
-
-    if (myGender) {
-        poolQuery = poolQuery.or(
-            `preference.eq.${myGender},preference.eq.Everyone,preference.eq.Any`, 
-            { foreignTable: 'dating_profiles' }
-        );
+    // 3. Apply Study Style Filtering
+    if (myStudy?.study_style) {
+        poolQuery = poolQuery.eq('study_profiles.study_style', myStudy.study_style)
     }
 
     const { data: poolUsers, error } = await poolQuery.limit(50)
@@ -80,13 +66,13 @@ export default async function DatingPoolPage() {
     }
 
     return (
-        <DatingPoolClient
+        <StudyPoolClient
             myProfile={myProfile}
-            myDating={myDating}
+            myStudy={myStudy}
             initialPoolUsers={poolUsers || []}
             currentUserId={user.id}
             chats={
-                <ChatList currentPool='dating'/>
+                <ChatList currentPool='study'/>
             }
         />
     )
