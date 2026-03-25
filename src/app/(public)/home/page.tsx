@@ -143,21 +143,24 @@ export default async function Homepage() {
                         {/* The Three Action Buttons Grid */}
                         <div className="grid w-full flex-1 grid-cols-1 gap-6 sm:grid-cols-3 lg:gap-8">
                             {/* Hangout Link */}
-                            <div className="relative flex h-full w-full min-h-[160px] cursor-not-allowed items-center justify-center overflow-hidden rounded-4xl border-4 border-border bg-foreground opacity-80 shadow-shadow grayscale">
+                            <Link
+                                href="/hangout/intro"
+                                className="group relative flex h-full w-full min-h-[160px] items-center justify-center overflow-hidden rounded-4xl border-4 border-border bg-foreground shadow-shadow transition-all duration-300 hover:-translate-y-2 hover:-rotate-2 hover:shadow-[8px_8px_0px_0px_var(--border)] active:translate-y-0 active:rotate-0 active:shadow-none"
+                            >
                                 <Image
                                     src="/picture/hangout.jpg"
                                     alt="Hangout"
                                     fill
-                                    className="object-cover opacity-50"
+                                    className="object-cover opacity-80 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100"
                                 />
-                                <div className="absolute inset-0 bg-foreground/20" />
+                                <div className="absolute inset-0 bg-foreground/20 transition-colors group-hover:bg-transparent" />
                                 <span className="relative z-10 text-4xl font-extrabold tracking-wide text-background drop-shadow-[3px_3px_0_var(--tw-shadow-color)] shadow-border">
                                     Hangout
                                 </span>
-                                <div className="absolute -right-12 top-8 z-20 w-48 rotate-45 bg-[#FF47D6] py-3 text-center text-xs font-extrabold uppercase tracking-widest text-foreground shadow-sm cursor-not-allowed select-none transition-transform hover:scale-110">
-                                    Coming Soon
+                                <div className="absolute -right-12 top-8 z-20 w-48 rotate-45 bg-main py-3 text-center text-xs font-extrabold uppercase tracking-widest text-white shadow-sm select-none transition-transform group-hover:scale-110">
+                                    NEW!
                                 </div>
-                            </div>
+                            </Link>
 
                             {/* Date Link */}
                             <Link
@@ -177,23 +180,26 @@ export default async function Homepage() {
                             </Link>
 
                             {/* Study Buddy Link */}
-                            <div className="relative flex h-full w-full min-h-[160px] cursor-not-allowed items-center justify-center overflow-hidden rounded-4xl border-4 border-border bg-foreground opacity-80 shadow-shadow grayscale">
+                            <Link
+                                href="/study-buddy/intro"
+                                className="group relative flex h-full w-full min-h-[160px] items-center justify-center overflow-hidden rounded-4xl border-4 border-border bg-foreground shadow-shadow transition-all duration-300 hover:-translate-y-2 hover:-rotate-2 hover:shadow-[8px_8px_0px_0px_var(--border)] active:translate-y-0 active:rotate-0 active:shadow-none"
+                            >
                                 <Image
                                     src="/picture/study.jpg"
                                     alt="Study Buddy"
                                     fill
-                                    className="object-cover opacity-50"
+                                    className="object-cover opacity-80 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100"
                                 />
-                                <div className="absolute inset-0 bg-foreground/20" />
+                                <div className="absolute inset-0 bg-foreground/20 transition-colors group-hover:bg-transparent" />
                                 <span className="relative z-10 text-center text-4xl font-extrabold leading-tight tracking-wide text-background drop-shadow-[3px_3px_0_var(--tw-shadow-color)] shadow-border">
                                     Study
                                     <br />
                                     Buddy
                                 </span>
-                                <div className="absolute -right-12 top-8 z-20 w-48 rotate-45 bg-[#FF47D6] py-3 text-center text-xs font-extrabold uppercase tracking-widest text-foreground shadow-sm cursor-not-allowed select-none transition-transform hover:scale-110">
-                                    Coming Soon
+                                <div className="absolute -right-12 top-8 z-20 w-48 rotate-45 bg-main py-3 text-center text-xs font-extrabold uppercase tracking-widest text-white shadow-sm select-none transition-transform group-hover:scale-110">
+                                    NEW!
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                     </div>
                 </div>
