@@ -2,7 +2,7 @@
 
 import { createClient } from '@/lib/client' // Use your client-side supabase helper
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils' // Shadcn utility
 
 // Option Constants matching your design
@@ -20,11 +20,38 @@ export default function DatingIntroPage() {
     const router = useRouter()
     const supabase = createClient()
     const [loading, setLoading] = useState(false)
+    const [initialLoading, setInitialLoading] = useState(true)
 
     // State for selections
     const [selectedPref, setSelectedPref] = useState<string | null>(null)
     const [selectedGoal, setSelectedGoal] = useState<string | null>(null)
     const [selectedLang, setSelectedLang] = useState<string | null>(null)
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            const {
+                data: { user },
+            } = await supabase.auth.getUser()
+            if (user) {
+                const { data: datingProfile } = await supabase
+                    .from('dating_profiles')
+                    .select('preference, relationship_goals, love_language')
+                    .eq('profile_id', user.id)
+                    .single()
+
+                if (datingProfile) {
+                    setSelectedPref(
+                        datingProfile.preference === 'Male' ? 'Guy' : 'Girl'
+                    )
+                    setSelectedGoal(datingProfile.relationship_goals)
+                    setSelectedLang(datingProfile.love_language)
+                }
+            }
+            setInitialLoading(false)
+        }
+
+        fetchProfile()
+    }, [supabase])
 
     const handleSubmit = async () => {
         if (!selectedPref || !selectedGoal || !selectedLang) {
@@ -88,8 +115,16 @@ export default function DatingIntroPage() {
         </button>
     )
 
+    if (initialLoading) {
+        return (
+            <div className="flex h-full items-center justify-center bg-background text-center">
+                <p className="text-xl font-bold text-foreground">Loading your preferences...</p>
+            </div>
+        )
+    }
+
     return (
-        <div className="flex flex-col items-center my-auto justify-center bg-background p-4 text-center">
+        <div className="flex flex-col items-center md:justify-center bg-background p-4 md:-my-32 text-center min-h-screen">
             <h1 className="mb-12 text-4xl font-extrabold text-foreground md:text-5xl">
                 What&apos;s ur type?
             </h1>

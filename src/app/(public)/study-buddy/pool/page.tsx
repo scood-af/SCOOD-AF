@@ -72,7 +72,7 @@ export default async function StudyPoolPage() {
             initialPoolUsers={poolUsers || []}
             currentUserId={user.id}
             chats={
-                <ChatList currentPool='study'/>
+                <ChatList />
             }
         />
     )

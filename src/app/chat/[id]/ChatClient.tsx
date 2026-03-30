@@ -215,7 +215,7 @@ export default function ChatClient({
                 </div>
 
                 <button
-                    onClick={() => router.push('/dating/pool')}
+                    onClick={() => router.back()}
                     className="flex h-12 w-12 items-center justify-center rounded-full border-4 border-border bg-background text-foreground shadow-border transition-transform hover:-translate-x-1 hover:shadow-[2px_2px_0_0_var(--tw-shadow-color)]"
                 >
                     <ArrowLeft strokeWidth={4} />
