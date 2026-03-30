@@ -2,7 +2,7 @@
 
 import { createClient } from '@/lib/client'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
 
 // Expanded Study Styles
@@ -18,10 +18,32 @@ export default function StudyIntroPage() {
     const router = useRouter()
     const supabase = createClient()
     const [loading, setLoading] = useState(false)
+    const [initialLoading, setInitialLoading] = useState(true)
 
     // State for selections
     const [selectedStyle, setSelectedStyle] = useState<string | null>(null)
     const [studyTopic, setStudyTopic] = useState('')
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            const { data: { user } } = await supabase.auth.getUser()
+            if (user) {
+                const { data: studyProfile } = await supabase
+                    .from('study_profiles')
+                    .select('study_style, study_topic')
+                    .eq('profile_id', user.id)
+                    .single()
+
+                if (studyProfile) {
+                    setSelectedStyle(studyProfile.study_style)
+                    setStudyTopic(studyProfile.study_topic)
+                }
+            }
+            setInitialLoading(false)
+        }
+
+        fetchProfile()
+    }, [supabase])
 
     const handleSubmit = async () => {
         if (!selectedStyle || !studyTopic.trim()) {
@@ -63,6 +85,14 @@ export default function StudyIntroPage() {
             {label}
         </button>
     )
+
+    if (initialLoading) {
+        return (
+            <div className="flex h-full items-center justify-center bg-background text-center">
+                <p className="text-xl font-bold text-foreground">Loading your preferences...</p>
+            </div>
+        )
+    }
 
     return (
         <div className="flex flex-col items-center md:justify-center bg-background p-4 md:-my-32 text-center min-h-screen">

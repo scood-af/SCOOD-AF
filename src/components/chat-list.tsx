@@ -4,9 +4,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
+import ClientTime from './client-time'
 
-// 1. Accept the currentPool as a prop
-export default async function ChatList({ currentPool = 'dating' }: { currentPool?: string }) {
+export default async function ChatList() {
     const cookieStore = await cookies()
     const supabase = createServerClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -25,7 +25,6 @@ export default async function ChatList({ currentPool = 'dating' }: { currentPool
 
     if (!user) return null
 
-    // 2. Add the filter and select pool_type
     const { data: activeChats, error: chatsError } = await supabase
         .from('active_chats')
         .select(`
@@ -44,7 +43,6 @@ export default async function ChatList({ currentPool = 'dating' }: { currentPool
                 sender_id
             )
         `)
-        .eq('match_requests.pool_type', currentPool) // <--- THIS EXCLUDES OTHER POOLS
 
     if (chatsError) {
         console.error('Error fetching chats:', chatsError)
@@ -92,9 +90,9 @@ export default async function ChatList({ currentPool = 'dating' }: { currentPool
 
     // Helper for tag colors
     const getTagColor = (type: string) => {
-        if (type === 'hangout') return 'bg-[#A3FF47] text-foreground'
-        if (type === 'study') return 'bg-blue-400 text-background'
-        return 'bg-[#FF47D6] text-background' // Dating default
+        if (type === 'hangout') return 'bg-primary text-foreground'
+        if (type === 'study') return 'bg-foreground text-background'
+        return 'bg-main text-background' // Dating default
     }
 
     return (
@@ -119,7 +117,7 @@ export default async function ChatList({ currentPool = 'dating' }: { currentPool
                                     </div>
                                     {chat.lastMessageTime && (
                                         <span className="shrink-0 text-[10px] font-bold uppercase text-muted-foreground">
-                                            {new Date(chat.lastMessageTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                            <ClientTime isoString={chat.lastMessageTime} />
                                         </span>
                                     )}
                                 </div>

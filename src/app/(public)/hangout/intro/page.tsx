@@ -2,7 +2,7 @@
 
 import { createClient } from '@/lib/client'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
 
 const OFFLINE_OPTIONS = ['Yes, let’s meet up!', 'No, online only']
@@ -11,12 +11,35 @@ export default function HangoutIntroPage() {
     const router = useRouter()
     const supabase = createClient()
     const [loading, setLoading] = useState(false)
+    const [initialLoading, setInitialLoading] = useState(true)
 
     // State for selections
     const [domicile, setDomicile] = useState('')
     const [topics, setTopics] = useState('')
     const [offlineOpen, setOfflineOpen] = useState<string | null>(null)
     const [step, setStep] = useState(1)
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            const { data: { user } } = await supabase.auth.getUser()
+            if (user) {
+                const { data: hangoutProfile } = await supabase
+                    .from('hangout_profiles')
+                    .select('domicile, topics, offline_open')
+                    .eq('profile_id', user.id)
+                    .single()
+
+                if (hangoutProfile) {
+                    setDomicile(hangoutProfile.domicile)
+                    setTopics(hangoutProfile.topics)
+                    setOfflineOpen(hangoutProfile.offline_open ? 'Yes, let’s meet up!' : 'No, online only')
+                }
+            }
+            setInitialLoading(false)
+        }
+
+        fetchProfile()
+    }, [supabase])
 
     const handleSubmit = async () => {
         if (!domicile.trim() || !topics.trim() || !offlineOpen) {
@@ -59,6 +82,14 @@ export default function HangoutIntroPage() {
             {label}
         </button>
     )
+
+    if (initialLoading) {
+        return (
+            <div className="flex h-full items-center justify-center bg-background text-center">
+                <p className="text-xl font-bold text-foreground">Loading your preferences...</p>
+            </div>
+        )
+    }
 
     return (
         <div className="flex flex-col items-center md:justify-center bg-background p-4 md:-my-32 text-center min-h-screen">

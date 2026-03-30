@@ -63,7 +63,7 @@ export default async function HangoutPoolPage() {
             initialPoolUsers={poolUsers || []}
             currentUserId={user.id}
             chats={
-                <ChatList currentPool='hangout'/>
+                <ChatList />
             }
         />
     )

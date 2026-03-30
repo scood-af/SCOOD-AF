@@ -4,8 +4,8 @@ const menuItems = [
     { label: 'Home', ariaLabel: 'Go to home page', link: '/home' },
     { label: 'Profile', ariaLabel: 'View Profile', link: '/profile' },
     { label: 'Date', ariaLabel: 'View Dating Pool', link: '/dating/intro' },
-    { label: 'Hangout', ariaLabel: 'View Hangout Pool', link: '/home' },
-    { label: 'Study', ariaLabel: 'View Study Pool', link: '/home' },
+    { label: 'Hangout', ariaLabel: 'View Hangout Pool', link: '/hangout/intro' },
+    { label: 'Study', ariaLabel: 'View Study Pool', link: '/study-buddy/intro' },
 ]
 
 const socialItems = [
