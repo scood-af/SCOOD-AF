@@ -1,4 +1,5 @@
 import StaggeredMenu from '@/components/StaggeredMenu'
+import ShutdownBanner from '@/components/goodbye-card'
 
 const menuItems = [
     { label: 'Home', ariaLabel: 'Go to home page', link: '/home' },
@@ -35,6 +36,7 @@ export default function PublicLayout({
                 logoUrl="/path-to-your-logo.svg"
                 accentColor="var(--main)"
             />
+            <ShutdownBanner />
             <div className="pt-24 md:pt-32 h-screen overflow-hidden flex flex-col pb-6">
                 {children}
             </div>
