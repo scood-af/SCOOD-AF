@@ -70,6 +70,7 @@ export default function RootLayout({
                         logoUrl="/path-to-your-logo.svg"
                         accentColor="var(--main)"
                     /> */}
+                    
                     <div className="min-h-screen">{children}</div>
                     <Analytics />
                 </ClickSpark>
